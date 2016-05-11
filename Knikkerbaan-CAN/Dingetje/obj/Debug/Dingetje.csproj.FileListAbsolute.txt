@@ -1,0 +1,8 @@
+D:\git\can-arduino-serial\Dingetje\Dingetje\bin\Debug\Dingetje.exe
+D:\git\can-arduino-serial\Dingetje\Dingetje\bin\Debug\Dingetje.pdb
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.csprojResolveAssemblyReference.cache
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.Form1.resources
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.Properties.Resources.resources
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.csproj.GenerateResource.Cache
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.exe
+D:\git\can-arduino-serial\Dingetje\Dingetje\obj\Debug\Dingetje.pdb
