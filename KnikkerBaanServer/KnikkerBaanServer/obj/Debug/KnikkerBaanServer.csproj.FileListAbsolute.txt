@@ -1,0 +1,6 @@
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll.config
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.pdb
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
+c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
