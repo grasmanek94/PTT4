@@ -1,0 +1,8 @@
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\Dingetje.exe
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\Dingetje.pdb
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\CAN-Serial.csprojResolveAssemblyReference.cache
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\Dingetje.Form1.resources
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\Dingetje.Properties.Resources.resources
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\CAN-Serial.csproj.GenerateResource.Cache
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\bin\Debug\Dingetje.exe
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\bin\Debug\Dingetje.pdb

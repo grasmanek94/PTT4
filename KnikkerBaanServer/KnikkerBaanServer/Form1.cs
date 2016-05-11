@@ -11,14 +11,12 @@ namespace Dingetje
 {
     public partial class Form1 : Form
     {
-        MessageStorage msgStor;
         public Form1()
         {
             InitializeComponent();
             ArduinoCommunicator ard = new ArduinoCommunicator("COM7", 9600);
             ard.MessageFound += Ard_MessageFound;
             ard.Start();
-            msgStor = MessageStorage.Messagestorage;
         }
 
         private void Ard_MessageFound(string obj)
@@ -36,7 +34,6 @@ namespace Dingetje
                     int num;
                     Int32.TryParse(obj.Substring(start, end - start), out num);
                     messageBox.Text = num.ToString();
-                    msgStor.AddMessage(obj);
 
                     if (obj.StartsWith(">0xFF"))
                     {

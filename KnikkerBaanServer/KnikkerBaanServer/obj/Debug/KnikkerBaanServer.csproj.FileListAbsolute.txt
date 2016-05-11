@@ -4,3 +4,9 @@ c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBa
 c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
 c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
 c:\users\janet\documents\visual studio 2015\Projects\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll.config
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll
+C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.pdb
