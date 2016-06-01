@@ -1,5 +1,6 @@
 #define ArraySize 10
 #define ServoPin 3
+#define SensorPin A0
 #include <Servo.h>
 
 int Average = 0;
@@ -9,9 +10,10 @@ int AvgArray[ArraySize];
 int Index = 0;
 Servo myServo;
 
-int small_marble_size = 6200;
-int large_marble_size = 5800;
-int Default_value = 6400;
+int small_marble_size = 650;
+int large_marble_size = 600;
+int Threshold = 6400;
+int Default_value = 6600;
 
 enum State
 {
@@ -21,7 +23,7 @@ enum State
 
 State state;
 
-int servo_rest = 142;
+int servo_rest = 138;
 int servo_reject = 180;
 int servo_allow = 10;
 
@@ -58,7 +60,7 @@ void Initialise()
   int i = 0;
   for (; i < ArraySize; i++)
   {
-    AvgArray[i] = analogRead(A0);
+    AvgArray[i] = analogRead(SensorPin);
   }
   IsInitialised = true;
 }
@@ -77,7 +79,7 @@ void CalculateAverage()
 
 void AddSingleValueToArray()
 {
-  AvgArray[Index] = analogRead(A0);
+  AvgArray[Index] = analogRead(SensorPin);
   Index++;
   if (Index >= ArraySize)
   {
@@ -93,28 +95,30 @@ void StateMachine(int* allow)
     Serial.print("Thing detected");
     state = Measure;
     *allow = 0;
-    delay(2000);
+    delay(500);
     return;
   }
-  if (state == Measure && Average < small_marble_size)
+  if (state == Measure && Average < Threshold)
   {
-    if (state == Measure && Average > large_marble_size && Average < small_marble_size)//(Average > large_marble_size && Average < small_marble_size))
+    int CurrentVal = analogRead(SensorPin);
+    Serial.println(CurrentVal);
+    if (state == Measure && CurrentVal > large_marble_size && CurrentVal < small_marble_size)//(Average > large_marble_size && Average < small_marble_size))
     {
       Serial.println("allow");
       myServo.write(servo_allow);
       delay(1000);
       myServo.write(servo_rest);
       state = Wait;
-      delay(2000);
+      delay(500);
     }
-    if (state == Measure && Average < large_marble_size && Average < small_marble_size)
+    if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
     {
       Serial.println("reject");
       myServo.write(servo_reject);
       delay(1000);
       myServo.write(servo_rest);
       state = Wait;
-      delay(2000);
+      delay(500);
     }
   }
     delay(1);
