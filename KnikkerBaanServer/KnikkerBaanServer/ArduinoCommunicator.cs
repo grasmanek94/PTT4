@@ -10,21 +10,23 @@ namespace KnikkerBaanServer
 {
     public class ArduinoCommunicator
     {
-        public event Action<string> MessageFound;
+        public event Action<Can_Message> MessageFound;
 
         private const int bufferSize = 32;
         private const string messageStart = ">";
         private const string messageEnd = ";";
 
         private SerialPort serialPort;
-        private string buffer;
+        private Byte[] buffer;
         private Thread receiveThread;
         private bool startReceiving;
+        MessageStorage messageStorage = MessageStorage.Messagestorage;
 
         public ArduinoCommunicator(string portName, int baudRate)
         {
             serialPort = new SerialPort(portName, baudRate);
             serialPort.Encoding = Encoding.ASCII;
+            buffer = new Byte[8];
         }
 
         public bool SendBytes(byte[] message)
@@ -49,7 +51,7 @@ namespace KnikkerBaanServer
 
         public void Start()
         {
-            buffer = "";
+            buffer[0] = 0;
             startReceiving = true;
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
@@ -69,6 +71,7 @@ namespace KnikkerBaanServer
             {
                 try
                 {
+                    int i = 0;
                     while (serialPort.BytesToRead > 0)
                     {
                         /*byte[] bytes = new byte[serialPort.BytesToRead];
@@ -76,15 +79,24 @@ namespace KnikkerBaanServer
 
                         ASCIIEncoding encoder = new ASCIIEncoding();
                         string message = encoder.GetString(bytes);*/
-                        string message = serialPort.ReadExisting();
-                        buffer += message;
+                        //Byte message = serialPort.ReadExisting();
+                        
+                        Byte Message = (Byte)serialPort.ReadByte();
 
-                        string found = FindMessages();
-                        if (found != null &&
-                            MessageFound != null)
+                        if (i < 8)
                         {
-                            MessageFound(found);
+                            buffer[i] = Message;
+
+                            
+                            i++;
                         }
+                    }
+                    Can_Message message = FindMessage(buffer);
+                    if (message != null &&
+                    MessageFound != null)
+                    {
+                        messageStorage.AddMessage(message);
+                        MessageFound(message);
                     }
                 }
                 catch (IOException)
@@ -99,25 +111,16 @@ namespace KnikkerBaanServer
             serialPort.Close();
         }
 
-        private string FindMessages()
+        private Can_Message FindMessage(Byte[] message)
         {
-            int start = buffer.IndexOf(messageStart);
-            
-            if (start != -1)
-            {
-                int end = buffer.IndexOf(messageEnd, start);
-                if (end != -1)
-                {
-                    string msg = buffer.Substring(
-                    start, (end - start) + 1);
-                    buffer = buffer.Substring(end + 1);
+            Can_Message msg = new Can_Message();
 
-                    return msg;
-                }
-                
-            }
-
-            return null;
+            msg.Identifier = message[0];
+            msg.Type = message[1];
+            msg.Function = message[2];
+            msg.Value = message[3];
+            msg.Diagnostics = message[4];
+            return msg;
         }
     }
 }
