@@ -251,6 +251,7 @@ DualVNH5019MotorShield motorController;
 
 void setup() 
 {
+    motorController.init();
     motorController.setSpeeds(400,400);
 }
 
