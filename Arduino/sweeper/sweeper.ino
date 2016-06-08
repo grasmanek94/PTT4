@@ -101,7 +101,7 @@ public:
         detector_pin = detectorPin;
         servo_pin = servoPin;
         move_state = true;      
-        move_time = 2500;
+        move_time = 1750;
         detect_time = 1000;
         last_detect_time = 0;   
         pos_now = 0;    
@@ -148,6 +148,11 @@ public:
     {
         getting_marble = false;
     }
+
+    bool GettingMarble()
+    {
+        return getting_marble;
+    }
 };
 
 MarblePassThrough passer(3, 2);
@@ -171,6 +176,11 @@ void loop()
         lightning ^= 1;
         digitalWrite(13, lightning);
         Serial.println("DM");
+    }
+    if(!passer.GettingMarble())
+    {
+        delay(5000);
+        passer.GetMarble();
     }
 }
 
