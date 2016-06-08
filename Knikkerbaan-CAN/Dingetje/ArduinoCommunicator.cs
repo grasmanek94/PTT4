@@ -57,7 +57,7 @@ namespace Dingetje
 
         private void Receive()
         {
-            serialPort.Open();
+            //serialPort.Open();
 
             EventWaitHandle waithandler = new EventWaitHandle(
                 false,

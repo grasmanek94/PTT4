@@ -10,26 +10,52 @@ namespace KnikkerBaanServer
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class CScadaService : IScadaService
     {
-        string ServerName = "The KnikkerBaanServer";
+        ArduinoCommunicator arduinoCommunicator = new ArduinoCommunicator("COM4", 9600);
         MessageStorage messageStorage = MessageStorage.Messagestorage;
-
-        public CScadaService()
-        {
-            Can_Message canMessage = new Can_Message();
-            canMessage.Identifier = 1;
-            canMessage.Type = 3;
-            canMessage.Function = 2;
-            canMessage.Value = 118;
-            canMessage.Diagnostics = 150;
-            messageStorage.AddMessage(canMessage);
-        }
-
         public void SetPolicy(Policy policy)
         {
-            //TODO: Implement
+            byte[] message = new byte[10];
+            int i = 0;
+            for (; i < 10; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        message[i] = (byte)arduinoCommunicator.messageStart;
+                        break;
+                    case 1:
+                        message[i] = policy.address;
+                        break;
+                    case 2:
+                        message[i] = policy.PolicyModuleOne;
+                        break;
+                    case 3:
+                        message[i] = policy.PolicyValueOne;
+                        break;
+                    case 4:
+                        message[i] = policy.PolicyModuleTwo;
+                        break;
+                    case 5:
+                        message[i] = policy.PolicyValueTwo;
+                        break;
+                    case 6:
+                        message[i] = policy.PolicyModuleThree;
+                        break;
+                    case 7:
+                        message[i] = policy.PolicyValueThree;
+                        break;
+                    case 8:
+                        message[i] = policy.EmptyByte;
+                        break;
+                    case 9:
+                        message[i] = (byte)arduinoCommunicator.messageEnd;
+                        break;
+                }
+            }
+            arduinoCommunicator.SendBytes(message);
         }
 
-        public List<Can_Message> GetCanMessages()
+        public List<string> GetCanMessages()
         {
             return messageStorage.Messages;
         }
@@ -42,7 +68,7 @@ namespace KnikkerBaanServer
 
         public string GetServerName()
         {
-            return ServerName;
+            return "KnikkerBaanServer";
         }
     }
 }

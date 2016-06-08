@@ -22,49 +22,29 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Can_Message", Namespace="http://schemas.datacontract.org/2004/07/KnikkerBaanServer")]
-    [System.SerializableAttribute()]
-    public partial class Can_Message : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte EmptyByteField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DiagnosticsField;
+        private byte PolicyModuleOneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FunctionField;
+        private byte PolicyModuleThreeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdentifierField;
+        private byte PolicyModuleTwoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TypeField;
+        private byte PolicyValueOneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ValueField;
+        private byte PolicyValueThreeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte PolicyValueTwoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte addressField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -77,66 +57,105 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Diagnostics {
+        public byte EmptyByte {
             get {
-                return this.DiagnosticsField;
+                return this.EmptyByteField;
             }
             set {
-                if ((this.DiagnosticsField.Equals(value) != true)) {
-                    this.DiagnosticsField = value;
-                    this.RaisePropertyChanged("Diagnostics");
+                if ((this.EmptyByteField.Equals(value) != true)) {
+                    this.EmptyByteField = value;
+                    this.RaisePropertyChanged("EmptyByte");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Function {
+        public byte PolicyModuleOne {
             get {
-                return this.FunctionField;
+                return this.PolicyModuleOneField;
             }
             set {
-                if ((this.FunctionField.Equals(value) != true)) {
-                    this.FunctionField = value;
-                    this.RaisePropertyChanged("Function");
+                if ((this.PolicyModuleOneField.Equals(value) != true)) {
+                    this.PolicyModuleOneField = value;
+                    this.RaisePropertyChanged("PolicyModuleOne");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Identifier {
+        public byte PolicyModuleThree {
             get {
-                return this.IdentifierField;
+                return this.PolicyModuleThreeField;
             }
             set {
-                if ((this.IdentifierField.Equals(value) != true)) {
-                    this.IdentifierField = value;
-                    this.RaisePropertyChanged("Identifier");
+                if ((this.PolicyModuleThreeField.Equals(value) != true)) {
+                    this.PolicyModuleThreeField = value;
+                    this.RaisePropertyChanged("PolicyModuleThree");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Type {
+        public byte PolicyModuleTwo {
             get {
-                return this.TypeField;
+                return this.PolicyModuleTwoField;
             }
             set {
-                if ((this.TypeField.Equals(value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
+                if ((this.PolicyModuleTwoField.Equals(value) != true)) {
+                    this.PolicyModuleTwoField = value;
+                    this.RaisePropertyChanged("PolicyModuleTwo");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Value {
+        public byte PolicyValueOne {
             get {
-                return this.ValueField;
+                return this.PolicyValueOneField;
             }
             set {
-                if ((this.ValueField.Equals(value) != true)) {
-                    this.ValueField = value;
-                    this.RaisePropertyChanged("Value");
+                if ((this.PolicyValueOneField.Equals(value) != true)) {
+                    this.PolicyValueOneField = value;
+                    this.RaisePropertyChanged("PolicyValueOne");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte PolicyValueThree {
+            get {
+                return this.PolicyValueThreeField;
+            }
+            set {
+                if ((this.PolicyValueThreeField.Equals(value) != true)) {
+                    this.PolicyValueThreeField = value;
+                    this.RaisePropertyChanged("PolicyValueThree");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte PolicyValueTwo {
+            get {
+                return this.PolicyValueTwoField;
+            }
+            set {
+                if ((this.PolicyValueTwoField.Equals(value) != true)) {
+                    this.PolicyValueTwoField = value;
+                    this.RaisePropertyChanged("PolicyValueTwo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte address {
+            get {
+                return this.addressField;
+            }
+            set {
+                if ((this.addressField.Equals(value) != true)) {
+                    this.addressField = value;
+                    this.RaisePropertyChanged("address");
                 }
             }
         }
@@ -162,10 +181,10 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         System.Threading.Tasks.Task SetPolicyAsync(Knikkerbaan_SCADA.ScadaServiceReference.Policy policy);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScadaService/GetCanMessages", ReplyAction="http://tempuri.org/IScadaService/GetCanMessagesResponse")]
-        Knikkerbaan_SCADA.ScadaServiceReference.Can_Message[] GetCanMessages();
+        string[] GetCanMessages();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScadaService/GetCanMessages", ReplyAction="http://tempuri.org/IScadaService/GetCanMessagesResponse")]
-        System.Threading.Tasks.Task<Knikkerbaan_SCADA.ScadaServiceReference.Can_Message[]> GetCanMessagesAsync();
+        System.Threading.Tasks.Task<string[]> GetCanMessagesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScadaService/GetPolicy", ReplyAction="http://tempuri.org/IScadaService/GetPolicyResponse")]
         Knikkerbaan_SCADA.ScadaServiceReference.Policy GetPolicy();
@@ -215,11 +234,11 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
             return base.Channel.SetPolicyAsync(policy);
         }
         
-        public Knikkerbaan_SCADA.ScadaServiceReference.Can_Message[] GetCanMessages() {
+        public string[] GetCanMessages() {
             return base.Channel.GetCanMessages();
         }
         
-        public System.Threading.Tasks.Task<Knikkerbaan_SCADA.ScadaServiceReference.Can_Message[]> GetCanMessagesAsync() {
+        public System.Threading.Tasks.Task<string[]> GetCanMessagesAsync() {
             return base.Channel.GetCanMessagesAsync();
         }
         

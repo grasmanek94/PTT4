@@ -14,14 +14,13 @@ namespace KnikkerBaanServer
         void SetPolicy(Policy policy);
 
         [OperationContract]
-        List<Can_Message> GetCanMessages();
+        List<string> GetCanMessages();
 
         [OperationContract]
         Policy GetPolicy();
 
         [OperationContract]
         string GetServerName();
-
         // TODO: Add your service operations here
     }
 
@@ -30,21 +29,21 @@ namespace KnikkerBaanServer
     [DataContract]
     public class Policy
     {
-       //ToDo: Determine Properties
-    }
-
-    [DataContract]
-    public class Can_Message
-    {
         [DataMember]
-        public int Identifier { get; set; }
+        public byte address { get; set; }
         [DataMember]
-        public int Type { get; set; }
+        public byte PolicyModuleOne { get; set; }
         [DataMember]
-        public int Function { get; set; }
+        public byte PolicyValueOne { get; set; }
         [DataMember]
-        public int Value { get; set; }
+        public byte PolicyModuleTwo { get; set; }
         [DataMember]
-        public int Diagnostics { get; set; }
+        public byte PolicyValueTwo { get; set; }
+        [DataMember]
+        public byte PolicyModuleThree { get; set; }
+        [DataMember]
+        public byte PolicyValueThree { get; set; }
+        [DataMember]
+        public byte EmptyByte { get; private set; }
     }
 }
