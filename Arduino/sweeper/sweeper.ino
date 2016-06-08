@@ -44,7 +44,7 @@ class MarblePassThrough
 
     void PassMarble()
     {
-        pos_start = 100;
+        pos_start = 107;
         pos_end = 0;
         time_start = millis();
         time_end = time_start + move_time;
@@ -54,7 +54,7 @@ class MarblePassThrough
     void LoadMarble()
     {
         pos_start = 0;
-        pos_end = 100;   
+        pos_end = 107;   
         time_start = millis();
         time_end = time_start + move_time;      
         move_state = true;       
@@ -101,7 +101,7 @@ public:
         detector_pin = detectorPin;
         servo_pin = servoPin;
         move_state = true;      
-        move_time = 1750;
+        move_time = 1000;
         detect_time = 1000;
         last_detect_time = 0;   
         pos_now = 0;    
