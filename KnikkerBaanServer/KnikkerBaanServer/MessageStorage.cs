@@ -12,21 +12,20 @@ namespace KnikkerBaanServer
 
         public Policy CurrentPolicy { get; set; }
 
-        public List<Can_Message> Messages { get; set; }
+        public byte[] PolicyBytes { get; set; }
 
-        private MessageStorage()
-        {
-            Messages = new List<Can_Message>();
-        }
+        public List<string> Messages { get; set; }
+
+        private MessageStorage() { }
 
         public static MessageStorage Messagestorage
         {
             get { return instance; }
         }
 
-        public void AddMessage(Can_Message message)
+        public void AddMessage(string message)
         {
-            Can_Message msg = CheckForDuplicates(message);
+            string msg = CheckForDuplicates(message);
             if(msg != null)
             {
                 Messages.Remove(msg);
@@ -34,11 +33,11 @@ namespace KnikkerBaanServer
             Messages.Add(message);
         }
 
-        public Can_Message CheckForDuplicates(Can_Message message)
+        public string CheckForDuplicates(string message)
         {
-            foreach (Can_Message msg in Messages)
+            foreach (string msg in Messages)
             {
-                if (message.Identifier == msg.Identifier)
+                if (message.Substring(0,4) == msg.Substring(0,4))
                 {
                     return msg;
                 }

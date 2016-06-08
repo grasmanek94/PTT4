@@ -28,56 +28,136 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.ServerNameTextbox = new System.Windows.Forms.TextBox();
+            this.PolicyNode1Combobox = new System.Windows.Forms.ComboBox();
+            this.PolicyNode2Combobox = new System.Windows.Forms.ComboBox();
+            this.PolicyNode3Combobox = new System.Windows.Forms.ComboBox();
+            this.SetPolicyButton = new System.Windows.Forms.Button();
+            this.ConnectToServerButton = new System.Windows.Forms.Button();
+            this.Node1Label = new System.Windows.Forms.Label();
+            this.Node2Label = new System.Windows.Forms.Label();
+            this.Node3Label = new System.Windows.Forms.Label();
+            this.Node1Info = new System.Windows.Forms.TextBox();
+            this.Node2Info = new System.Windows.Forms.TextBox();
+            this.Node3Info = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // ServerNameTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
+            this.ServerNameTextbox.Location = new System.Drawing.Point(13, 13);
+            this.ServerNameTextbox.Name = "ServerNameTextbox";
+            this.ServerNameTextbox.Size = new System.Drawing.Size(100, 20);
+            this.ServerNameTextbox.TabIndex = 0;
             // 
-            // button1
+            // PolicyNode1Combobox
             // 
-            this.button1.Location = new System.Drawing.Point(13, 40);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.PolicyNode1Combobox.FormattingEnabled = true;
+            this.PolicyNode1Combobox.Location = new System.Drawing.Point(13, 171);
+            this.PolicyNode1Combobox.Name = "PolicyNode1Combobox";
+            this.PolicyNode1Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode1Combobox.TabIndex = 1;
             // 
-            // button2
+            // PolicyNode2Combobox
             // 
-            this.button2.Location = new System.Drawing.Point(128, 40);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.PolicyNode2Combobox.FormattingEnabled = true;
+            this.PolicyNode2Combobox.Location = new System.Drawing.Point(230, 171);
+            this.PolicyNode2Combobox.Name = "PolicyNode2Combobox";
+            this.PolicyNode2Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode2Combobox.TabIndex = 2;
             // 
-            // listBox1
+            // PolicyNode3Combobox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(13, 69);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(664, 95);
-            this.listBox1.TabIndex = 3;
+            this.PolicyNode3Combobox.FormattingEnabled = true;
+            this.PolicyNode3Combobox.Location = new System.Drawing.Point(435, 171);
+            this.PolicyNode3Combobox.Name = "PolicyNode3Combobox";
+            this.PolicyNode3Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode3Combobox.TabIndex = 3;
+            // 
+            // SetPolicyButton
+            // 
+            this.SetPolicyButton.Location = new System.Drawing.Point(602, 169);
+            this.SetPolicyButton.Name = "SetPolicyButton";
+            this.SetPolicyButton.Size = new System.Drawing.Size(75, 23);
+            this.SetPolicyButton.TabIndex = 4;
+            this.SetPolicyButton.Text = "Set Policy";
+            this.SetPolicyButton.UseVisualStyleBackColor = true;
+            this.SetPolicyButton.Click += new System.EventHandler(this.SetPolicyButton_Click);
+            // 
+            // ConnectToServerButton
+            // 
+            this.ConnectToServerButton.Location = new System.Drawing.Point(119, 11);
+            this.ConnectToServerButton.Name = "ConnectToServerButton";
+            this.ConnectToServerButton.Size = new System.Drawing.Size(75, 23);
+            this.ConnectToServerButton.TabIndex = 5;
+            this.ConnectToServerButton.Text = "Connect";
+            this.ConnectToServerButton.UseVisualStyleBackColor = true;
+            this.ConnectToServerButton.Click += new System.EventHandler(this.ConnectToServerButton_Click);
+            // 
+            // Node1Label
+            // 
+            this.Node1Label.AutoSize = true;
+            this.Node1Label.Location = new System.Drawing.Point(10, 69);
+            this.Node1Label.Name = "Node1Label";
+            this.Node1Label.Size = new System.Drawing.Size(42, 13);
+            this.Node1Label.TabIndex = 6;
+            this.Node1Label.Text = "Node 1";
+            // 
+            // Node2Label
+            // 
+            this.Node2Label.AutoSize = true;
+            this.Node2Label.Location = new System.Drawing.Point(227, 69);
+            this.Node2Label.Name = "Node2Label";
+            this.Node2Label.Size = new System.Drawing.Size(42, 13);
+            this.Node2Label.TabIndex = 7;
+            this.Node2Label.Text = "Node 2";
+            // 
+            // Node3Label
+            // 
+            this.Node3Label.AutoSize = true;
+            this.Node3Label.Location = new System.Drawing.Point(432, 69);
+            this.Node3Label.Name = "Node3Label";
+            this.Node3Label.Size = new System.Drawing.Size(42, 13);
+            this.Node3Label.TabIndex = 8;
+            this.Node3Label.Text = "Node 3";
+            // 
+            // Node1Info
+            // 
+            this.Node1Info.Location = new System.Drawing.Point(12, 145);
+            this.Node1Info.Name = "Node1Info";
+            this.Node1Info.Size = new System.Drawing.Size(121, 20);
+            this.Node1Info.TabIndex = 9;
+            // 
+            // Node2Info
+            // 
+            this.Node2Info.Location = new System.Drawing.Point(230, 145);
+            this.Node2Info.Name = "Node2Info";
+            this.Node2Info.Size = new System.Drawing.Size(121, 20);
+            this.Node2Info.TabIndex = 10;
+            // 
+            // Node3Info
+            // 
+            this.Node3Info.Location = new System.Drawing.Point(435, 145);
+            this.Node3Info.Name = "Node3Info";
+            this.Node3Info.Size = new System.Drawing.Size(121, 20);
+            this.Node3Info.TabIndex = 11;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 261);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Node3Info);
+            this.Controls.Add(this.Node2Info);
+            this.Controls.Add(this.Node1Info);
+            this.Controls.Add(this.Node3Label);
+            this.Controls.Add(this.Node2Label);
+            this.Controls.Add(this.Node1Label);
+            this.Controls.Add(this.ConnectToServerButton);
+            this.Controls.Add(this.SetPolicyButton);
+            this.Controls.Add(this.PolicyNode3Combobox);
+            this.Controls.Add(this.PolicyNode2Combobox);
+            this.Controls.Add(this.PolicyNode1Combobox);
+            this.Controls.Add(this.ServerNameTextbox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -87,10 +167,18 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox ServerNameTextbox;
+        private System.Windows.Forms.ComboBox PolicyNode1Combobox;
+        private System.Windows.Forms.ComboBox PolicyNode2Combobox;
+        private System.Windows.Forms.ComboBox PolicyNode3Combobox;
+        private System.Windows.Forms.Button SetPolicyButton;
+        private System.Windows.Forms.Button ConnectToServerButton;
+        private System.Windows.Forms.Label Node1Label;
+        private System.Windows.Forms.Label Node2Label;
+        private System.Windows.Forms.Label Node3Label;
+        private System.Windows.Forms.TextBox Node1Info;
+        private System.Windows.Forms.TextBox Node2Info;
+        private System.Windows.Forms.TextBox Node3Info;
     }
 }
 
