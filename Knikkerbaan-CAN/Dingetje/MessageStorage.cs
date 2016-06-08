@@ -12,6 +12,8 @@ namespace Dingetje
 
         public Policy CurrentPolicy { get; set; }
 
+        public byte[] PolicyBytes { get; set; }
+
         public List<string> Messages { get; set; }
 
         private MessageStorage() { }

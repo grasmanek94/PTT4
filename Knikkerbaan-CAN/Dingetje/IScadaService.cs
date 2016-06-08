@@ -27,6 +27,21 @@ namespace Dingetje
     [DataContract]
     public class Policy
     {
-       //ToDo: Determine Properties
+        [DataMember]
+        public byte address { get; set; }
+        [DataMember]
+        public byte PolicyModuleOne { get; set; }
+        [DataMember]
+        public byte PolicyValueOne { get; set; }
+        [DataMember]
+        public byte PolicyModuleTwo { get; set; }
+        [DataMember]
+        public byte PolicyValueTwo { get; set; }
+        [DataMember]
+        public byte PolicyModuleThree { get; set; }
+        [DataMember]
+        public byte PolicyValueThree { get; set; }
+        [DataMember]
+        public byte EmptyByte { get; private set; }
     }
 }
