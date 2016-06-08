@@ -82,11 +82,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\ScadaServiceReference\KnikkerBaanServer.xsd">
+    <None Include="Service References\ScadaServiceReference\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ScadaServiceReference\Knikkerbaan_SCADA.ScadaServiceReference.Can_Message.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Service References\ScadaServiceReference\KnikkerBaanServer.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ScadaServiceReference\Knikkerbaan_SCADA.ScadaServiceReference.Policy.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

@@ -6,3 +6,4 @@ C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\Dingetje
 C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\obj\Debug\CAN-Serial.csproj.GenerateResource.Cache
 C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\bin\Debug\Dingetje.exe
 C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\bin\Debug\Dingetje.pdb
+C:\Users\Janet\Documents\GitHub\PTT4\Knikkerbaan-CAN\Dingetje\bin\Debug\Dingetje.exe.config
