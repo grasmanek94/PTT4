@@ -11,47 +11,26 @@ class MarblePassThrough
     Servo servo;
     bool move_state;
     long move_time;
+    int servo_pin;
         
     int detector_pin;
     long last_detect_time;
     long detect_time;
-public:
-    MarblePassThrough(int servoPin, int detectorPin)
-    {
-        //pinMode(detectorPin, INPUT_PULLUP);   
-        servo.attach(servoPin);
-        
-        move_state = true;
-        detector_pin = detectorPin;
-        move_time = 5000;
-        detect_time = 1000;
-        last_detect_time = 0;   
-        pos_now = 0;
-             
-        Begin();
-    }
 
-    ~MarblePassThrough()
-    {
-        
-    }
+    bool getting_marble;
 
-    bool Tick()
+    bool CheckPosition()
     {
-        servo.write(100);
-        delay(5000);
-        long time_now = millis();
+         long time_now = millis();
         if(time_now >= time_start && time_now <= time_end)
         {
             long time_diff = time_now - time_start;
             float percentage = ((float)time_diff) / ((float)(move_time));
             int pos_calculated = pos_start + (int)(((float)(pos_end - pos_start)) * percentage);
-            if(abs(pos_calculated - pos_now) >= 10)
+            if(pos_calculated != pos_now)
             {
                 pos_now = pos_calculated;
-                servo.write(100);
-                delay(50);
-                Serial.println(pos_now);
+                servo.write(pos_now);
             }
             
             return false;
@@ -60,36 +39,36 @@ public:
         {
             servo.write(pos_end);
             return true;
-        }
+        }       
     }
 
-    void Begin()
+    void PassMarble()
     {
-        pos_start = 130;
+        pos_start = 107;
         pos_end = 0;
         time_start = millis();
         time_end = time_start + move_time;
-        move_state = true;
+        move_state = false;
     }
 
-    void End()
+    void LoadMarble()
     {
         pos_start = 0;
-        pos_end = 130;   
+        pos_end = 107;   
         time_start = millis();
         time_end = time_start + move_time;      
-        move_state = false;       
+        move_state = true;       
     }
 
     void Switch()
     {
         if(!move_state)
         {
-            Begin();
+            LoadMarble();
         }
         else
         {
-            End();
+            PassMarble();
         }
     }
     
@@ -107,13 +86,72 @@ public:
         }
         
         bool ballPassed = digitalRead(detector_pin);        
-        if(!ballPassed)
+        if(ballPassed)
         {
             return false;
         }
         
         last_detect_time = time_now;
         return true;       
+    }
+          
+public:
+    MarblePassThrough(int servoPin, int detectorPin)
+    {
+        detector_pin = detectorPin;
+        servo_pin = servoPin;
+        move_state = true;      
+        move_time = 1000;
+        detect_time = 1000;
+        last_detect_time = 0;   
+        pos_now = 0;    
+        getting_marble = false;    
+    }
+
+    ~MarblePassThrough()
+    {
+        
+    }
+
+    void Setup()
+    {
+        pinMode(detector_pin, INPUT_PULLUP);   
+        servo.attach(servo_pin);
+             
+        LoadMarble();
+    }
+
+    bool GettingMarbleTick()
+    {
+        if(getting_marble)
+        {
+            if(CheckPosition())
+            {
+                Switch();
+            }
+
+            if(DetectedMarble())
+            {
+                getting_marble = false;
+                return true;
+            }            
+        }
+        return false;
+    }
+
+    void GetMarble()
+    {
+        getting_marble = true;
+    }
+
+    void StopMarble()
+    {
+        getting_marble = false;
+    }
+
+    bool GettingMarble()
+    {
+        return getting_marble;
     }
 };
 
@@ -124,21 +162,25 @@ void setup()
 {
     Serial.begin(9600);
     pinMode(13, OUTPUT);
+    
+    passer.Setup();
+
+    //Get one marble
+    passer.GetMarble();
 }
 
 void loop() 
 {
-    if(passer.Tick())
-    {
-        passer.Switch();
-        Serial.println("S");
-    }
-
-    if(passer.DetectedMarble())
+    if(passer.GettingMarbleTick())
     {
         lightning ^= 1;
         digitalWrite(13, lightning);
         Serial.println("DM");
+    }
+    if(!passer.GettingMarble())
+    {
+        delay(5000);
+        passer.GetMarble();
     }
 }
 
