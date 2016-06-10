@@ -1,13 +1,13 @@
 #include <SPI.h>
-#include <MCP2515.h>
+#include <MCP2515.h> //modified - public readReg(byte regno)
 #define SERIALBUFF_SZ 64
 
 #define CAN_MyAddress 0x0A
 
 MCP2515 can;
 CANMSG canReceived;
-int canReceiveTimeoutMs = 100;
-int canTransmitTimeoutMs = 100;
+int canReceiveTimeoutMs = 20;
+int canTransmitTimeoutMs = 20;
 
 byte startSign = '[';
 byte endSign = ']';
@@ -41,13 +41,19 @@ void setup() {
 
 void loop() {
   // incoming CAN message processing
-  handleCAN(can.receiveCANMessage(&canReceived, canReceiveTimeoutMs));
-  
+
+  // Stole this from the receiveCANMessage method in MCP2515.cpp
+  // Should trigger right when a new CAN message is available now
+  byte val = can.readReg(0x2C); //CANINTF
+  if (bitRead(val, 0) == 1) {
+    handleCAN(can.receiveCANMessage(&canReceived, canReceiveTimeoutMs));
+  }
+    
   // incoming Serial message processing
   SerialMessage serialMsg;
   if (handleSerial(&serialMsg)) {
     if (transmitCAN(serialMsg)) {
-      Serial.println("Can Transmit success");
+      Serial.println("CAN Transmit success");
     }
   }
 }
@@ -109,8 +115,23 @@ void handleCAN(bool messageReceived) {
 }
 
 void sendSerialMsg(CANMSG message) {
-  byte dataToSend[8] = {};
+  
+  
+  byte dataToSend[8] = {}; //wip pls fix
+  dataToSend[0] = message[0];
+  dataToSend[1] = message[1];
+  dataToSend[2] = message[2];
+  dataToSend[3] = message[3];
+  dataToSend[4] = message[4];
+  dataToSend[5] = message[5];
+  dataToSend[6] = message[6];
+  dataToSend[7] = message[7];
 
+  Serial.write(startSign);
+  for (int i = 0; i < 8; i++) {
+    Serial.write(dataToSend[i]);
+  }
+  Serial.write(endSign);
 }
 
 void sendCanMsg(unsigned long adrsValue, int dataLength, byte *data) {
