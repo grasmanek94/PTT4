@@ -115,17 +115,15 @@ void handleCAN(bool messageReceived) {
 }
 
 void sendSerialMsg(CANMSG message) {
-  
-  
   byte dataToSend[8] = {}; //wip pls fix
-  dataToSend[0] = message[0];
-  dataToSend[1] = message[1];
-  dataToSend[2] = message[2];
-  dataToSend[3] = message[3];
-  dataToSend[4] = message[4];
-  dataToSend[5] = message[5];
-  dataToSend[6] = message[6];
-  dataToSend[7] = message[7];
+  dataToSend[0] = message.adrsValue;
+  dataToSend[1] = message.data[0];
+  dataToSend[2] = message.data[1];
+  dataToSend[3] = message.data[2];
+  dataToSend[4] = message.data[3];
+  dataToSend[5] = message.data[4];
+  dataToSend[6] = message.data[5];
+  dataToSend[7] = message.data[6];
 
   Serial.write(startSign);
   for (int i = 0; i < 8; i++) {
