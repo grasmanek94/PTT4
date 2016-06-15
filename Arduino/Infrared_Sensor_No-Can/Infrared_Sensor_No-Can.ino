@@ -11,7 +11,7 @@
 
 MCP2515 can;
 
-struct SerialMessage {
+struct CustomCanMessage {
   byte senderAddress;
   byte module1;
   byte policy1;
@@ -22,8 +22,8 @@ struct SerialMessage {
   byte empty;
 };
 
-SerialMessage messageTrue;
-SerialMessage messageFalse;
+CustomCanMessage messageTrue;
+CustomCanMessage messageFalse;
 int canReceiveTimeoutMs = 20;
 int canTransmitTimeoutMs = 20;
 int Policy = 1;
@@ -48,7 +48,7 @@ enum State
 
 State state;
 
-int servo_rest = 122;
+int servo_rest = 124;
 int servo_reject = 180;
 int servo_allow = 10;
 
@@ -69,7 +69,7 @@ void loop() {
   {
     Serial.println("set Policy");
   }
-  Serial.println(Average);
+  //Serial.println(Average);
   int allow = 0;
   StateMachine(&allow);
   if (allow == 0)

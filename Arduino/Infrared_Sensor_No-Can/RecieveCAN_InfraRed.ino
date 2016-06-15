@@ -3,21 +3,23 @@
 bool SetPolicy()
 {
   CANMSG canReceived;
-  if (can.receiveCANMessage(&canReceived, canReceiveTimeoutMs))\
+  if (can.receiveCANMessage(&canReceived, canReceiveTimeoutMs))
   {
-    SerialMessage message = ParseMessage(canReceived);
+    Serial.println("Message");
+    CustomCanMessage message = ParseMessage(canReceived);
+    PrintMessage(message);
     if (message.module2 == CAN_MyAddress)
     {
-      Policy = message.policy1;
+      Policy = message.policy2;
       return true;
     }
   }
   return false;
 }
 
-SerialMessage ParseMessage(CANMSG message)
+CustomCanMessage ParseMessage(CANMSG message)
 {
-  SerialMessage msg;
+  CustomCanMessage msg;
   msg.senderAddress = message.adrsValue;
   msg.module1 = message.data[0];
   msg.policy1 = message.data[1];
@@ -28,3 +30,24 @@ SerialMessage ParseMessage(CANMSG message)
   msg.empty = message.data[6];
   return msg;
 }
+
+void PrintMessage(CustomCanMessage message)
+{
+  Serial.print(message.senderAddress,HEX);
+  Serial.print(',');
+  Serial.print(message.module1,HEX);
+  Serial.print(',');
+  Serial.print(message.policy1,HEX);
+  Serial.print(',');
+  Serial.print(message.module2,HEX);
+  Serial.print(',');
+  Serial.print(message.policy2,HEX);
+  Serial.print(',');
+  Serial.print(message.module3,HEX);
+  Serial.print(',');
+  Serial.print(message.policy3,HEX);
+  Serial.print(',');
+  Serial.print(message.empty,HEX);
+  Serial.print("");
+}
+

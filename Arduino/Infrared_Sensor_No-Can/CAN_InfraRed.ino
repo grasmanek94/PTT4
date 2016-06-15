@@ -12,9 +12,9 @@ void InitCan()
   }
 }
 
-SerialMessage CreateMessageTrue()
+CustomCanMessage CreateMessageTrue()
 {
-  SerialMessage msg;
+  CustomCanMessage msg;
   msg.senderAddress = 0XFF;
   msg.module1 = 0xFF;
   msg.policy1 = 0xFF;
@@ -26,9 +26,9 @@ SerialMessage CreateMessageTrue()
   return msg;
 }
 
-SerialMessage CreateMessageFalse()
+CustomCanMessage CreateMessageFalse()
 {
-  SerialMessage msg;
+  CustomCanMessage msg;
   msg.senderAddress = 0XAA;
   msg.module1 = 0xAA;
   msg.policy1 = 0xAA;
@@ -40,7 +40,7 @@ SerialMessage CreateMessageFalse()
   return msg;
 }
 
-bool transmitCAN(SerialMessage message) {
+bool transmitCAN(CustomCanMessage message) {
 
   CANMSG canmsg;
   canmsg.adrsValue = CAN_MyAddress;
