@@ -12,6 +12,8 @@ int canTransmitTimeoutMs = 20;
 byte startSign = '[';
 byte endSign = ']';
 
+bool ledStatus13 = true;
+
 byte serialBuffer[SERIALBUFF_SZ] = {};
 int serialBufferPos = 0;
 
@@ -27,9 +29,11 @@ struct CustomSerialMessage {
 };
 
 void setup() {
+  pinMode(3, OUTPUT);
   Serial.begin(9600); 
   while (!Serial) ; 
   Serial.println("Go...");
+
   
   SPI.setClockDivider(SPI_CLOCK_DIV8);
   if(can.initCAN(CAN_BAUD_100K) == 0) {
@@ -44,8 +48,10 @@ void setup() {
 }
 
 void loop() {
-  // incoming CAN message processing
+  digitalWrite(3, ledStatus13);
 
+  
+  // incoming CAN message processing
   // Stole this from the receiveCANMessage method in MCP2515.cpp
   // Should trigger right when a new CAN message is available now
   byte val = can.readReg(0x2C); //CANINTF
@@ -62,6 +68,7 @@ void loop() {
       Serial.println("CAN Transmit failed");
     }
   }
+  
 }
 
 bool transmitCAN(CustomSerialMessage message) {
@@ -112,6 +119,7 @@ bool handleSerial(CustomSerialMessage *message) {
       memset(serialBuffer, 0, SERIALBUFF_SZ);
       serialBufferPos = 0;
       Serial.println("Serial msg valid!");
+      ledStatus13 = !ledStatus13;
       return true;
     } else {
       memset(serialBuffer, 0, SERIALBUFF_SZ);
