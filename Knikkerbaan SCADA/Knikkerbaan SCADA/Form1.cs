@@ -38,6 +38,8 @@ namespace Knikkerbaan_SCADA
         private void SetPolicyButton_Click(object sender, EventArgs e)
         {
             Policy policy = new Policy();
+            policy.senderAddress = 
+            policy.receiverAddress = 
             policy.PolicyModuleOne = (byte)NodeNames.Node1;
             policy.PolicyValueOne = lookupPolicy(NodeNames.Node1, PolicyNode1Combobox.SelectedItem.ToString());
             policy.PolicyModuleTwo = (byte)NodeNames.Node2;
@@ -130,6 +132,40 @@ namespace Knikkerbaan_SCADA
                     Node3Info.Text = msg.Substring(24, 8);
                 }
             }
+        }
+
+        private void btnRawMsg_Click(object sender, EventArgs e)
+        {
+            List<string> hexVals = tbRawMsg.Text.Split(',').ToList<string>();
+            if (hexVals.Count != 8)
+            {
+                // shit
+                MessageBox.Show("Count " + hexVals.Count);
+                return;
+            }
+
+            List<byte> hexVal = new List<byte>();
+            byte tempHex;
+            for (int i = 0; i < hexVals.Count; i++)
+            {
+                if (!byte.TryParse(hexVals[i], System.Globalization.NumberStyles.HexNumber, null, out tempHex))
+                {
+                    // kak
+                    MessageBox.Show("TryParse " + tempHex);
+                    return;
+                }
+                hexVal.Add(tempHex);
+            }
+            Policy policy = new Policy();
+            policy.senderAddress        = hexVal[0];
+            policy.receiverAddress      = hexVal[1];
+            policy.PolicyModuleOne      = hexVal[2];
+            policy.PolicyValueOne       = hexVal[3];
+            policy.PolicyModuleTwo      = hexVal[4];
+            policy.PolicyValueTwo       = hexVal[5];
+            policy.PolicyModuleThree    = hexVal[6];
+            policy.PolicyValueThree     = hexVal[7];
+            proxy.SetPolicy(policy);
         }
     }
 }

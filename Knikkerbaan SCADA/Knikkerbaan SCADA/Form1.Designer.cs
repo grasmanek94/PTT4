@@ -40,6 +40,9 @@
             this.Node1Info = new System.Windows.Forms.TextBox();
             this.Node2Info = new System.Windows.Forms.TextBox();
             this.Node3Info = new System.Windows.Forms.TextBox();
+            this.tbRawMsg = new System.Windows.Forms.TextBox();
+            this.btnRawMsg = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ServerNameTextbox
@@ -141,11 +144,40 @@
             this.Node3Info.Size = new System.Drawing.Size(121, 20);
             this.Node3Info.TabIndex = 11;
             // 
+            // tbRawMsg
+            // 
+            this.tbRawMsg.Location = new System.Drawing.Point(13, 231);
+            this.tbRawMsg.Name = "tbRawMsg";
+            this.tbRawMsg.Size = new System.Drawing.Size(211, 20);
+            this.tbRawMsg.TabIndex = 12;
+            // 
+            // btnRawMsg
+            // 
+            this.btnRawMsg.Location = new System.Drawing.Point(230, 229);
+            this.btnRawMsg.Name = "btnRawMsg";
+            this.btnRawMsg.Size = new System.Drawing.Size(75, 23);
+            this.btnRawMsg.TabIndex = 13;
+            this.btnRawMsg.Text = "btnRawMsg";
+            this.btnRawMsg.UseVisualStyleBackColor = true;
+            this.btnRawMsg.Click += new System.EventHandler(this.btnRawMsg_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 212);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(343, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Enter hex values separated by commas, eg: 0x01,0x02, for 8 bytes kthx";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 261);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnRawMsg);
+            this.Controls.Add(this.tbRawMsg);
             this.Controls.Add(this.Node3Info);
             this.Controls.Add(this.Node2Info);
             this.Controls.Add(this.Node1Info);
@@ -179,6 +211,9 @@
         private System.Windows.Forms.TextBox Node1Info;
         private System.Windows.Forms.TextBox Node2Info;
         private System.Windows.Forms.TextBox Node3Info;
+        private System.Windows.Forms.TextBox tbRawMsg;
+        private System.Windows.Forms.Button btnRawMsg;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -23,9 +23,6 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private byte EmptyByteField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private byte PolicyModuleOneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -44,7 +41,10 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         private byte PolicyValueTwoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private byte addressField;
+        private byte receiverAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte senderAddressField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -53,19 +53,6 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte EmptyByte {
-            get {
-                return this.EmptyByteField;
-            }
-            set {
-                if ((this.EmptyByteField.Equals(value) != true)) {
-                    this.EmptyByteField = value;
-                    this.RaisePropertyChanged("EmptyByte");
-                }
             }
         }
         
@@ -148,14 +135,27 @@ namespace Knikkerbaan_SCADA.ScadaServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte address {
+        public byte receiverAddress {
             get {
-                return this.addressField;
+                return this.receiverAddressField;
             }
             set {
-                if ((this.addressField.Equals(value) != true)) {
-                    this.addressField = value;
-                    this.RaisePropertyChanged("address");
+                if ((this.receiverAddressField.Equals(value) != true)) {
+                    this.receiverAddressField = value;
+                    this.RaisePropertyChanged("receiverAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte senderAddress {
+            get {
+                return this.senderAddressField;
+            }
+            set {
+                if ((this.senderAddressField.Equals(value) != true)) {
+                    this.senderAddressField = value;
+                    this.RaisePropertyChanged("senderAddress");
                 }
             }
         }

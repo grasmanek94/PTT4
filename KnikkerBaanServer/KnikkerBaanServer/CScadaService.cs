@@ -15,43 +15,18 @@ namespace KnikkerBaanServer
         public void SetPolicy(Policy policy)
         {
             byte[] message = new byte[10];
-            int i = 0;
-            for (; i < 10; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        message[i] = (byte)arduinoCommunicator.messageStart;
-                        break;
-                    case 1:
-                        message[i] = policy.address;
-                        break;
-                    case 2:
-                        message[i] = policy.PolicyModuleOne;
-                        break;
-                    case 3:
-                        message[i] = policy.PolicyValueOne;
-                        break;
-                    case 4:
-                        message[i] = policy.PolicyModuleTwo;
-                        break;
-                    case 5:
-                        message[i] = policy.PolicyValueTwo;
-                        break;
-                    case 6:
-                        message[i] = policy.PolicyModuleThree;
-                        break;
-                    case 7:
-                        message[i] = policy.PolicyValueThree;
-                        break;
-                    case 8:
-                        message[i] = policy.EmptyByte;
-                        break;
-                    case 9:
-                        message[i] = (byte)arduinoCommunicator.messageEnd;
-                        break;
-                }
-            }
+
+            message[0] = (byte)arduinoCommunicator.messageStart;
+            message[1] = policy.senderAddress;
+            message[2] = policy.receiverAddress;
+            message[3] = policy.PolicyModuleOne;
+            message[4] = policy.PolicyValueOne;
+            message[5] = policy.PolicyModuleTwo;
+            message[6] = policy.PolicyValueTwo;
+            message[7] = policy.PolicyModuleThree;
+            message[8] = policy.PolicyValueThree;
+            message[9] = (byte)arduinoCommunicator.messageEnd;
+
             arduinoCommunicator.SendBytes(message);
         }
 

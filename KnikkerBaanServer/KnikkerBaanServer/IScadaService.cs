@@ -30,7 +30,9 @@ namespace KnikkerBaanServer
     public class Policy
     {
         [DataMember]
-        public byte address { get; set; }
+        public byte senderAddress { get; set; }
+        [DataMember]
+        public byte receiverAddress { get; set; }
         [DataMember]
         public byte PolicyModuleOne { get; set; }
         [DataMember]
@@ -43,7 +45,6 @@ namespace KnikkerBaanServer
         public byte PolicyModuleThree { get; set; }
         [DataMember]
         public byte PolicyValueThree { get; set; }
-        [DataMember]
-        public byte EmptyByte { get; private set; }
+        
     }
 }

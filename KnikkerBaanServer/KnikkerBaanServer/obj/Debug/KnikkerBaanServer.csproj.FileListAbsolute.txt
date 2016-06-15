@@ -21,3 +21,4 @@ D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfkc.nlp
 D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfkd.nlp
 D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
 D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
