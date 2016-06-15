@@ -64,9 +64,8 @@ void InitCan()
     }
 }
 
-CustomCanMessage messageLiftStop {CAN_MyAddress, CAN_Address_Lift, LIFT_STOP, 0, 0, 0, 0, 0};
-CustomCanMessage messageLiftStart {CAN_MyAddress, CAN_Address_Lift, LIFT_START, 0, 0, 0, 0, 0};
-CustomCanMessage messagePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
+CustomCanMessage messageLiftStop {CAN_MyAddress, CAN_Address_Broadcast, LIFT_STOP, 0, 0, 0, 0, 0};
+CustomCanMessage messageLiftStart {CAN_MyAddress, CAN_Address_Broadcast, LIFT_START, 0, 0, 0, 0, 0};
 
 bool ParseMessage(CANMSG& message, CustomCanMessage& msg)
 {
