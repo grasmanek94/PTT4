@@ -1,3 +1,5 @@
+#include <SPI.h>
+#include <MCP2515.h> //modified - public readReg(byte regno)
 ///////////////////////////////////
 struct CustomCanMessage
 {
@@ -49,6 +51,7 @@ MCP2515 can;
 
 void InitCan()
 {
+	SPI.setClockDivider(SPI_CLOCK_DIV8);
     if (can.initCAN(CAN_BAUD_100K) == 0) 
     {
         Serial.println("initCAN() failed");
@@ -94,8 +97,25 @@ bool transmitCAN(CustomCanMessage& message)
     canmsg.data[5] = message.empty1;
     canmsg.data[6] = message.empty2;
     canmsg.data[7] = message.empty3;
-    can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
-    return true;
+    return can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
 }
 
+bool transmitCAN(CustomCanServerMessage& message)
+{
+	CANMSG canmsg;
+	canmsg.adrsValue = CAN_MyAddress;
+	canmsg.isExtendedAdrs = false;
+	canmsg.rtr = false;
+	canmsg.dataLength = 8;
+
+	canmsg.data[0] = message.senderAddress;
+	canmsg.data[1] = message.receiverAddress;
+	canmsg.data[2] = message.module_kleur;
+	canmsg.data[3] = message.policy_kleur;
+	canmsg.data[4] = message.module_hoogte;
+	canmsg.data[5] = message.policy_hoogte;
+	canmsg.data[6] = message.module_transparantie;
+	canmsg.data[7] = message.policy_transparantie;
+	return can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
+}
 ///////////////////////////////////

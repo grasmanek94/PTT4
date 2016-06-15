@@ -35,11 +35,13 @@ struct CustomCanServerMessage
 #define CAN_Address_Server 0x07 // module van X
 #define CAN_Address_Broadcast 0xFF // module van iedereen
 
-#define CAN_MyAddress CAN_Address_Infrared
+#define CAN_MyAddress CAN_Address_Server
 
 #define CAN_MS_TIMEOUT 20
 
-#define BROADCAST_SWEEPER_MARBLE_PASSED 0x01
+#define LIFT_START 0x01
+#define LIFT_STOP 0x02
+
 #define BROADCAST_MARBLE_ACCEPTED 0x01
 #define BROADCAST_MARBLE_REJECTED 0x02
 #define BROADCAST_STOP_ALL 0x03
@@ -48,7 +50,7 @@ MCP2515 can;
 
 void InitCan()
 {
-	SPI.setClockDivider(SPI_CLOCK_DIV8);
+    SPI.setClockDivider(SPI_CLOCK_DIV8);
     if (can.initCAN(CAN_BAUD_100K) == 0) 
     {
         Serial.println("initCAN() failed");
@@ -61,8 +63,8 @@ void InitCan()
     }
 }
 
-CustomCanMessage messagePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
-CustomCanMessage messageRejected {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
+CustomCanMessage messageLiftStop {CAN_MyAddress, CAN_Address_Lift, LIFT_STOP, 0, 0, 0, 0, 0};
+CustomCanMessage messageLiftStart {CAN_MyAddress, CAN_Address_Lift, LIFT_START, 0, 0, 0, 0, 0};
 
 bool ParseMessage(CANMSG& message, CustomCanMessage& msg)
 {
@@ -96,22 +98,22 @@ bool transmitCAN(CustomCanMessage& message)
     return can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
 }
 
-bool transmitCAN(CustomCanServerMessage& message)
+bool transmitCAN(CustomCanServerMessage& message) 
 {
-	CANMSG canmsg;
-	canmsg.adrsValue = CAN_MyAddress;
-	canmsg.isExtendedAdrs = false;
-	canmsg.rtr = false;
-	canmsg.dataLength = 8;
+    CANMSG canmsg;
+    canmsg.adrsValue = CAN_MyAddress;
+    canmsg.isExtendedAdrs = false;
+    canmsg.rtr = false;
+    canmsg.dataLength = 8;
 
-	canmsg.data[0] = message.senderAddress;
-	canmsg.data[1] = message.receiverAddress;
-	canmsg.data[2] = message.module_kleur;
-	canmsg.data[3] = message.policy_kleur;
-	canmsg.data[4] = message.module_hoogte;
-	canmsg.data[5] = message.policy_hoogte;
-	canmsg.data[6] = message.module_transparantie;
-	canmsg.data[7] = message.policy_transparantie;
-	return can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
+    canmsg.data[0] = message.senderAddress;
+    canmsg.data[1] = message.receiverAddress;
+    canmsg.data[2] = message.module_kleur;
+    canmsg.data[3] = message.policy_kleur;
+    canmsg.data[4] = message.module_hoogte;
+    canmsg.data[5] = message.policy_hoogte;
+    canmsg.data[6] = message.module_transparantie;
+    canmsg.data[7] = message.policy_transparantie;
+    return can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
 }
 ///////////////////////////////////
