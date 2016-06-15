@@ -1,7 +1,5 @@
 #include <ADJDS311.h>
 #include <Wire.h>
-#include <SPI.h>
-#include <MCP2515.h>
 #include <Servo.h>
 #include "canx.h"
 
