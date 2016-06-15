@@ -58,7 +58,7 @@ void loop()
     {
         if(can_message.senderAddress == CAN_Address_Server)
         {
-            CustomCanServerMessage* policy = (CustomCanServerMessage*)&smsg;
+            CustomCanServerMessage* policy = (CustomCanServerMessage*)&can_message;
 
             switch (policy->policy_kleur)
             {
