@@ -12,10 +12,10 @@ using Knikkerbaan_SCADA.ScadaServiceReference;
 
 namespace Knikkerbaan_SCADA
 {
-    public enum NodeNames : byte { NodePC=00000001, Node1=00000010, Node2=00000011, Node3=00000100,Node4=00000101,Node5=00000110 };
-    public enum Node1Actions : byte { Hoog=00000001, Laag=00000010, Alle=00000011, Geen=00000100 };
-    public enum Node2Actions : byte { Transparant=00000001, Opaque=00000010, Alle=00000011, Geen=00000100 };
-    public enum Node3Actions : byte { Wit=00000001, Groen=00000010, Zwart=00000011, Alle=00000100, Geen=00000101 };
+    public enum NodeNames : byte { NodePC=0x01, Node1=0x02, Node2=0x03, Node3=0x04,Node4=0x05,Node5=0x06 };
+    public enum Node1Actions : byte { Hoog=0x01, Laag=0x02, Alle=0x03, Geen=0x04 };
+    public enum Node2Actions : byte { Transparant=0x01, Opaque=0x02, Alle=0x03, Geen=0x04 };
+    public enum Node3Actions : byte { Wit=0x01, Groen=0x02, Zwart=0x03, Alle=0x04, Geen=0x05 };
 
     public partial class Form1 : Form
     {
@@ -39,12 +39,62 @@ namespace Knikkerbaan_SCADA
         {
             Policy policy = new Policy();
             policy.PolicyModuleOne = (byte)NodeNames.Node1;
-            policy.PolicyValueOne = (byte)PolicyNode1Combobox.SelectedItem;
+            policy.PolicyValueOne = lookupPolicy(NodeNames.Node1, PolicyNode1Combobox.SelectedItem.ToString());
             policy.PolicyModuleTwo = (byte)NodeNames.Node2;
-            policy.PolicyValueTwo = (byte)PolicyNode2Combobox.SelectedItem;
+            policy.PolicyValueTwo = lookupPolicy(NodeNames.Node2, PolicyNode2Combobox.SelectedItem.ToString());
             policy.PolicyModuleThree = (byte)NodeNames.Node3;
-            policy.PolicyValueThree = (byte)PolicyNode3Combobox.SelectedItem;
+            policy.PolicyValueThree = lookupPolicy(NodeNames.Node3, PolicyNode3Combobox.SelectedItem.ToString());
             proxy.SetPolicy(policy);
+        }
+
+        // This can probably be more efficient but eh design choices
+        private byte lookupPolicy(NodeNames node, string item)
+        {
+            switch (node)
+            {
+                case NodeNames.Node1:
+                    switch(item)
+                    {
+                        case "Hoog":
+                            return (byte)Node1Actions.Hoog;
+                        case "Laag":
+                            return (byte)Node1Actions.Laag;
+                        case "Alle":
+                            return (byte)Node1Actions.Alle;
+                        case "Geen":
+                            return (byte)Node1Actions.Geen;
+                    }
+                    break;
+                case NodeNames.Node2:
+                    switch (item)
+                    {
+                        case "Transparant":
+                            return (byte)Node2Actions.Transparant;
+                        case "Opaque":
+                            return (byte)Node2Actions.Opaque;
+                        case "Alle":
+                            return (byte)Node2Actions.Alle;
+                        case "Geen":
+                            return (byte)Node2Actions.Geen;
+                    }
+                    break;
+                case NodeNames.Node3:
+                    switch (item)
+                    {
+                        case "Wit":
+                            return (byte)Node3Actions.Wit;
+                        case "Groen":
+                            return (byte)Node3Actions.Groen;
+                        case "Zwart":
+                            return (byte)Node3Actions.Zwart;
+                        case "Alle":
+                            return (byte)Node3Actions.Alle;
+                        case "Geen":
+                            return (byte)Node3Actions.Geen;
+                    }
+                    break;
+            }
+            return 0xFF; // something went awfully wrong
         }
 
         private void FillComboboxes()
