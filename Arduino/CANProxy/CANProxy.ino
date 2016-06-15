@@ -12,10 +12,12 @@ int canTransmitTimeoutMs = 20;
 byte startSign = '[';
 byte endSign = ']';
 
+bool ledStatus13 = true;
+
 byte serialBuffer[SERIALBUFF_SZ] = {};
 int serialBufferPos = 0;
 
-struct SerialMessage {
+struct CustomSerialMessage {
   byte senderAddress;
   byte module1;
   byte policy1;
@@ -27,9 +29,11 @@ struct SerialMessage {
 };
 
 void setup() {
+  pinMode(3, OUTPUT);
   Serial.begin(9600); 
   while (!Serial) ; 
   Serial.println("Go...");
+
   
   SPI.setClockDivider(SPI_CLOCK_DIV8);
   if(can.initCAN(CAN_BAUD_100K) == 0) {
@@ -44,8 +48,10 @@ void setup() {
 }
 
 void loop() {
-  // incoming CAN message processing
+  digitalWrite(3, ledStatus13);
 
+  
+  // incoming CAN message processing
   // Stole this from the receiveCANMessage method in MCP2515.cpp
   // Should trigger right when a new CAN message is available now
   byte val = can.readReg(0x2C); //CANINTF
@@ -54,7 +60,7 @@ void loop() {
   }
     
   // incoming Serial message processing
-  SerialMessage serialMsg;
+  CustomSerialMessage serialMsg;
   if (handleSerial(&serialMsg)) {
     if (transmitCAN(serialMsg)) {
       Serial.println("CAN Transmit success");
@@ -62,9 +68,10 @@ void loop() {
       Serial.println("CAN Transmit failed");
     }
   }
+  
 }
 
-bool transmitCAN(SerialMessage message) {
+bool transmitCAN(CustomSerialMessage message) {
   CANMSG canSendMsg;
   canSendMsg.adrsValue = CAN_MyAddress;
   canSendMsg.isExtendedAdrs = false;
@@ -78,10 +85,15 @@ bool transmitCAN(SerialMessage message) {
   canSendMsg.data[5]=message.policy3;
   canSendMsg.data[6]=message.empty;
   canSendMsg.data[7]=message.empty;
+  Serial.print("Msg: ");
+  for (int i = 0; i < 8; i++) {
+    Serial.print(canSendMsg.data[i]);
+    Serial.print(" ");
+  }
   return can.transmitCANMessage(canSendMsg, canTransmitTimeoutMs);
 }
 
-bool handleSerial(SerialMessage *message) {
+bool handleSerial(CustomSerialMessage *message) {
   byte currByte = 0;
   if (Serial.available() > 0) {
     currByte = Serial.read();
@@ -95,24 +107,25 @@ bool handleSerial(SerialMessage *message) {
         beginPos = i;
       }
     }
-    if (beginPos == -1 || (serialBufferPos-1) - (beginPos+1) != 8) {
-      memset(serialBuffer, 0, SERIALBUFF_SZ);
-      serialBufferPos = 0;
-      Serial.println("Serial msg invalid: No begin char or wrong leng");
-      return false;
-    } else {
-      message->senderAddress  = serialBuffer[serialBufferPos+1];
-      message->module1        = serialBuffer[serialBufferPos+2];
-      message->policy1        = serialBuffer[serialBufferPos+3];
-      message->module2        = serialBuffer[serialBufferPos+4];
-      message->policy2        = serialBuffer[serialBufferPos+5];
-      message->module3        = serialBuffer[serialBufferPos+6];
-      message->policy3        = serialBuffer[serialBufferPos+7];
+    if (beginPos != -1 && (serialBufferPos-1) - (beginPos+1) == 8) {
+      message->senderAddress  = serialBuffer[beginPos+1];
+      message->module1        = serialBuffer[beginPos+2];
+      message->policy1        = serialBuffer[beginPos+3];
+      message->module2        = serialBuffer[beginPos+4];
+      message->policy2        = serialBuffer[beginPos+5];
+      message->module3        = serialBuffer[beginPos+6];
+      message->policy3        = serialBuffer[beginPos+7];
       message->empty          = 0;
       memset(serialBuffer, 0, SERIALBUFF_SZ);
       serialBufferPos = 0;
       Serial.println("Serial msg valid!");
+      ledStatus13 = !ledStatus13;
       return true;
+    } else {
+      memset(serialBuffer, 0, SERIALBUFF_SZ);
+      serialBufferPos = 0;
+      Serial.println("Serial msg invalid: No begin char or wrong leng");
+      return false;
     }
     Serial.println("Serial msg invalid: Something!");
   }
@@ -139,10 +152,6 @@ void sendSerialMsg(CANMSG message) {
     Serial.write(dataToSend[i]);
   }
   Serial.write(endSign);
-  //Serial.println("\n");
-  //for (int i = 0; i < 8; i++) {
-  //  Serial.println(dataToSend[i], HEX);
-  //}
 }
 
 void sendCanMsg(unsigned long adrsValue, int dataLength, byte *data) {

@@ -10,3 +10,14 @@ C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Deb
 C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll.config
 C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll
 C:\Users\Janet\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.pdb
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll.config
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.pdb
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\mscorlib.dll
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normidna.nlp
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfc.nlp
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfd.nlp
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfkc.nlp
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\normnfkd.nlp
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
+D:\git\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb

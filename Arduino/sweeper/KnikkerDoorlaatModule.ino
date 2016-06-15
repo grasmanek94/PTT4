@@ -1,6 +1,7 @@
 #include <Servo.h>
 #include <Arduino.h>
 #include <MCP2515.h>
+#include "canx.h"
 
 class MarblePassThrough
 {
@@ -133,7 +134,7 @@ public:
 
             if(DetectedMarble())
             {
-                getting_marble = false;
+                StopMarble();
                 return true;
             }            
         }
@@ -142,12 +143,20 @@ public:
 
     void GetMarble()
     {
-        getting_marble = true;
+        if(!getting_marble)
+        {
+            getting_marble = true;
+            transmitCAN(messageLiftStart);
+        }
     }
 
     void StopMarble()
     {
-        getting_marble = false;
+        if(getting_marble)
+        {
+            getting_marble = false;
+            transmitCAN(messageLiftStop);
+        }
     }
 
     bool GettingMarble()
@@ -159,6 +168,35 @@ public:
 MarblePassThrough passer(4, 2);
 bool lightning = false;
 
+bool ProcessIncommingMessages()
+{
+    CANMSG canReceived;
+    CustomCanMessage smsg;
+    if (can.receiveCANMessage(&canReceived, CAN_MS_TIMEOUT) && ParseMessage(canReceived, smsg))
+    {
+        if (smsg.receiverAddress == CAN_MyAddress)
+        {
+            passer.GetMarble();
+        }
+        else if (smsg.receiverAddress == CAN_Address_Broadcast)
+        {
+            switch(smsg.function)
+            {
+                case BROADCAST_MARBLE_ACCEPTED:
+                    if(smsg.senderAddress == CAN_Address_Transparency)
+                    {
+                        passer.GetMarble();
+                    }
+                break;
+                case BROADCAST_MARBLE_REJECTED:
+                    passer.GetMarble();
+                break;
+            }
+        }
+    }
+    return false;
+}
+
 void setup() 
 {
     Serial.begin(9600);
@@ -167,9 +205,6 @@ void setup()
     InitCan();
     
     passer.Setup();
-
-    //Get one marble
-    passer.GetMarble();
 }
 
 void loop() 
@@ -179,11 +214,9 @@ void loop()
         lightning ^= 1;
         digitalWrite(13, lightning);
         Serial.println("DM");
+        transmitCAN(messageBroadcastMarblePassed);
     }
-    if(!passer.GettingMarble())
-    {
-        delay(5000);
-        passer.GetMarble();
-    }
+
+    ProcessIncommingMessages();
 }
 

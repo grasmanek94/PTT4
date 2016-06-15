@@ -1,5 +1,5 @@
+#include "canx.h"
 #include <MCP2515.h>
-
 #define ArraySize 10
 #define ServoPin 3
 #define SensorPin A0
@@ -7,18 +7,17 @@
 #define CS_PIN    85
 #define RESET_PIN  7
 #define INT_PIN    84
-#define CAN_MyAddress 0x02
 
 MCP2515 can;
 
 struct CustomCanMessage {
   byte senderAddress;
-  byte module1;
-  byte policy1;
-  byte module2;
-  byte policy2;
-  byte module3;
-  byte policy3;
+  byte data1; //Server:module1
+  byte data2; //Server:policy1
+  byte data3; //Server:module2
+  byte data4; //Server:policy2
+  byte data5; //Server:module3
+  byte data6; //Server:policy3
   byte empty;
 };
 
@@ -31,6 +30,7 @@ int Policy = 1;
 int Average = 0;
 bool IsInitialised = false;
 bool triggering = false;
+bool IsAllowedToPass = false;
 int AvgArray[ArraySize];
 int Index = 0;
 Servo myServo;
@@ -65,7 +65,7 @@ void setup()
 }
 
 void loop() {
-  if(SetPolicy())
+  if (SetPolicy())
   {
     Serial.println("set Policy");
   }
@@ -144,35 +144,38 @@ void StateMachine(int* allow)
 
 int CheckSizeOfMarbleToPolicy(int CurrentVal)
 {
-  if (Policy == 1)
+  if (IsAllowedToPass)
   {
-    if (state == Measure && CurrentVal > large_marble_size && CurrentVal < small_marble_size)
+    if (Policy == 1)
+    {
+      if (state == Measure && CurrentVal > large_marble_size && CurrentVal < small_marble_size)
+      {
+        AllowMarble();
+      }
+      if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
+      {
+        RejectMarble();
+      }
+    }
+    if (Policy == 2)
+    {
+      if (state == Measure && CurrentVal < large_marble_size && CurrentVal > small_marble_size)
+      {
+        AllowMarble();
+      }
+      if (state == Measure && CurrentVal > large_marble_size && CurrentVal > small_marble_size)
+      {
+        RejectMarble();
+      }
+    }
+    if (Policy == 3)
     {
       AllowMarble();
     }
-    if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
+    if (Policy == 4)
     {
       RejectMarble();
     }
-  }
-  if (Policy == 2)
-  {
-    if (state == Measure && CurrentVal < large_marble_size && CurrentVal > small_marble_size)
-    {
-      AllowMarble();
-    }
-    if (state == Measure && CurrentVal > large_marble_size && CurrentVal > small_marble_size)
-    {
-      RejectMarble();
-    }
-  }
-  if(Policy == 3)
-  {
-    AllowMarble();
-  }
-  if(Policy == 4)
-  {
-    RejectMarble();
   }
 }
 
@@ -192,6 +195,7 @@ void AllowMarble()
   delay(1000);
   myServo.write(servo_rest);
   transmitCAN(messageTrue);
+  IsAllowedToPass = false;
   state = Wait;
   delay(500);
   digitalWrite(13, LOW);
