@@ -2,24 +2,6 @@
 #include <Arduino.h>
 #include <MCP2515.h>
 
-#define CAN_MyAddress 0x0A
-
-MCP2515 can;
-
-struct SerialMessage {
-  byte senderAddress;
-  byte receiverAddress;
-  byte function;
-  byte measure;
-  byte diagnostics;
-  byte empty1;
-  byte empty2;
-  byte empty3;
-};
-
-SerialMessage messageTrue;
-SerialMessage messageFalse;
-
 class MarblePassThrough
 {
     long time_start;
@@ -174,13 +156,15 @@ public:
     }
 };
 
-MarblePassThrough passer(3, 2);
+MarblePassThrough passer(4, 2);
 bool lightning = false;
 
 void setup() 
 {
     Serial.begin(9600);
+    Serial.println("SWEEPER ONLINE");
     pinMode(13, OUTPUT);
+    InitCan();
     
     passer.Setup();
 
