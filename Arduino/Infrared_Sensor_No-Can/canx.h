@@ -1,4 +1,5 @@
 ///////////////////////////////////
+/*
 struct CustomCanMessage
 {
     byte senderAddress;
@@ -10,7 +11,7 @@ struct CustomCanMessage
     byte empty2;
     byte empty3;
 };
-
+*/
 #define CAN_Address_Invalid 0x00 // niemand / niks
 #define CAN_Address_Sweeper 0x01 // module van Rafal 
 #define CAN_Address_Infrared 0x02 // module van Mathieu
@@ -33,7 +34,7 @@ struct CustomCanMessage
 #define BROADCAST_MARBLE_REJECTED 0x02
 #define BROADCAST_STOP_ALL 0x03
 
-MCP2515 can;
+/*MCP2515 can;
 
 void InitCan()
 {
@@ -84,5 +85,5 @@ bool transmitCAN(CustomCanMessage& message)
     canmsg.data[7] = message.empty3;
     can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
 }
-
+*/
 ///////////////////////////////////
