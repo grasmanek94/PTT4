@@ -90,10 +90,7 @@ bool SetPolicy()
                 //received broadcast message
                 if(can_message.senderAddress == CAN_Address_Color && (can_message.function == BROADCAST_MARBLE_ACCEPTED || can_message.function == BROADCAST_MARBLE_ACCEPTED))
                 {
-                    if(can_message.empty1 == 0xFF || can_message.empty1 == 0xAA)
-                    {
-                        IsAllowedToPass = true;
-                    }
+                    IsAllowedToPass = true;
                 }                
             }
         }
