@@ -85,21 +85,20 @@ bool handleSerial(SerialMessage *message) {
   byte currByte = 0;
   if (Serial.available() > 0) {
     currByte = Serial.read();
-    Serial.println(currByte);
     serialBuffer[serialBufferPos] = currByte;
     serialBufferPos++;
   }
   if (currByte == endSign) {
     int beginPos = -1;
     for (int i = 0; i < serialBufferPos; i++) {
-      if (serialBuffer[i] == beginPos) {
+      if (serialBuffer[i] == startSign) {
         beginPos = i;
       }
     }
-    if (beginPos == -1) {
+    if (beginPos == -1 || (serialBufferPos-1) - (beginPos+1) != 8) {
       memset(serialBuffer, 0, SERIALBUFF_SZ);
       serialBufferPos = 0;
-      Serial.println("Serial msg invalid");
+      Serial.println("Serial msg invalid: No begin char or wrong leng");
       return false;
     } else {
       message->senderAddress  = serialBuffer[serialBufferPos+1];
@@ -115,7 +114,7 @@ bool handleSerial(SerialMessage *message) {
       Serial.println("Serial msg valid!");
       return true;
     }
-    Serial.println("Serial msg invalid");
+    Serial.println("Serial msg invalid: Something!");
   }
   return false;
 }
