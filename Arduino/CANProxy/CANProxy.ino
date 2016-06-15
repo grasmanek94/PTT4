@@ -28,6 +28,9 @@ struct SerialMessage {
 
 void setup() {
   Serial.begin(9600); 
+  while (!Serial) ; 
+  Serial.println("Go...");
+  
   SPI.setClockDivider(SPI_CLOCK_DIV8);
   if(can.initCAN(CAN_BAUD_100K) == 0) {
     Serial.println("initCAN() failed");
@@ -37,6 +40,7 @@ void setup() {
     Serial.println("setCANNormalMode() failed");
     while(1);
   }
+  Serial.println("setup() success");
 }
 
 void loop() {
@@ -54,6 +58,8 @@ void loop() {
   if (handleSerial(&serialMsg)) {
     if (transmitCAN(serialMsg)) {
       Serial.println("CAN Transmit success");
+    } else {
+      Serial.println("CAN Transmit failed");
     }
   }
 }
@@ -72,13 +78,14 @@ bool transmitCAN(SerialMessage message) {
   canSendMsg.data[5]=message.policy3;
   canSendMsg.data[6]=message.empty;
   canSendMsg.data[7]=message.empty;
-  can.transmitCANMessage(canSendMsg, canTransmitTimeoutMs);
+  return can.transmitCANMessage(canSendMsg, canTransmitTimeoutMs);
 }
 
 bool handleSerial(SerialMessage *message) {
   byte currByte = 0;
   if (Serial.available() > 0) {
     currByte = Serial.read();
+    Serial.println(currByte);
     serialBuffer[serialBufferPos] = currByte;
     serialBufferPos++;
   }
@@ -92,6 +99,7 @@ bool handleSerial(SerialMessage *message) {
     if (beginPos == -1) {
       memset(serialBuffer, 0, SERIALBUFF_SZ);
       serialBufferPos = 0;
+      Serial.println("Serial msg invalid");
       return false;
     } else {
       message->senderAddress  = serialBuffer[serialBufferPos+1];
@@ -104,8 +112,10 @@ bool handleSerial(SerialMessage *message) {
       message->empty          = 0;
       memset(serialBuffer, 0, SERIALBUFF_SZ);
       serialBufferPos = 0;
+      Serial.println("Serial msg valid!");
       return true;
     }
+    Serial.println("Serial msg invalid");
   }
   return false;
 }
@@ -130,6 +140,10 @@ void sendSerialMsg(CANMSG message) {
     Serial.write(dataToSend[i]);
   }
   Serial.write(endSign);
+  //Serial.println("\n");
+  //for (int i = 0; i < 8; i++) {
+  //  Serial.println(dataToSend[i], HEX);
+  //}
 }
 
 void sendCanMsg(unsigned long adrsValue, int dataLength, byte *data) {
