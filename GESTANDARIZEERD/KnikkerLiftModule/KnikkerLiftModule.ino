@@ -29,7 +29,7 @@ volatile int timer2Count;
   
 };*/ 
 bool enabled_module = true;
-int lift_state; //0 disabled 1 running 2 stopped
+int lift_state = 2; //0 disabled 1 running 2 stopped
 bool ProcessIncommingMessages()
 {
     CANMSG canReceived;
