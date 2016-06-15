@@ -6,7 +6,7 @@ bool SetPolicy()
   if (can.receiveCANMessage(&canReceived, canReceiveTimeoutMs))
   {
     Serial.println("Message");
-    SerialMessage message = ParseMessage(canReceived);
+    CustomCanMessage message = ParseMessage(canReceived);
     PrintMessage(message);
     if (message.module2 == CAN_MyAddress)
     {
@@ -17,9 +17,9 @@ bool SetPolicy()
   return false;
 }
 
-SerialMessage ParseMessage(CANMSG message)
+CustomCanMessage ParseMessage(CANMSG message)
 {
-  SerialMessage msg;
+  CustomCanMessage msg;
   msg.senderAddress = message.adrsValue;
   msg.module1 = message.data[0];
   msg.policy1 = message.data[1];
@@ -31,7 +31,7 @@ SerialMessage ParseMessage(CANMSG message)
   return msg;
 }
 
-void PrintMessage(SerialMessage message)
+void PrintMessage(CustomCanMessage message)
 {
   Serial.print(message.senderAddress,HEX);
   Serial.print(',');

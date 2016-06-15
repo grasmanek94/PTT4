@@ -11,7 +11,7 @@
 
 MCP2515 can;
 
-struct SerialMessage {
+struct CustomCanMessage {
   byte senderAddress;
   byte module1;
   byte policy1;
@@ -22,8 +22,8 @@ struct SerialMessage {
   byte empty;
 };
 
-SerialMessage messageTrue;
-SerialMessage messageFalse;
+CustomCanMessage messageTrue;
+CustomCanMessage messageFalse;
 int canReceiveTimeoutMs = 20;
 int canTransmitTimeoutMs = 20;
 int Policy = 1;
