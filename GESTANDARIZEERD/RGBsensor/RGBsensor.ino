@@ -8,15 +8,19 @@
 #define doorstand 30
 #define beginstand 80
 #define wegstand 180
-#define GROEN 1
-#define WIT   2
-//#define ZWART 3
+#define GROEN  1
+#define WIT    2
+#define DONKER 3
+#define ALLES  4
+
 Servo myservo;  // create servo object to control a servo
+
 int sensorLed_pin = 2; //LED on the ADJDS-311
 int pos = 0;    // variable to store the servo position
 int mem[] = {0, 0, 0};
 int newmem[] = {0, 0, 0};
 int kleurkeuze = WIT;
+
 ADJDS311 colorSensor(sensorLed_pin);
 CustomCanMessage can_message;
 CANMSG msg;
@@ -51,21 +55,18 @@ void setup()
 void loop() 
 {
     RGBC color = colorSensor.read(); //read the color
-
-    if (can.receiveCANMessage(&msg, 1000) && ParseMessage(msg, can_message))
+    
+    if (can.receiveCANMessage(&msg, CAN_MS_TIMEOUT) && ParseMessage(msg, can_message))
     {
         if(can_message.receiverAddress = CAN_MyAddress)
         {
-            switch (msg.data[2])
+            switch (can_message.function)
             {
-            case 1:
-                //kleurkeuze =
-                break;
-            case 2:
-                //kleurkeuze =
-                break;
-            case 3:
-                //kleurkeuze =
+            case GROEN:
+            case WIT:
+            case DONKER:
+            case ALLES:
+                kleurkeuze = can_message.function;
                 break;
             }
             readRGB(color);
@@ -100,22 +101,71 @@ void readRGB(RGBC color)
         newmem[0] = map(color.red, 0, 1024, 0, 255);
         newmem[1] = map(color.green, 0, 1024, 0, 255);
         newmem[2] = map(color.blue, 0, 1024, 0, 255);
-
-        //case WIT:
-        if (newmem[0] > 200 && newmem[1] > 200 && newmem[2] > 180)
+        boolean isdoorgelaten = false;
+        switch (kleurkeuze)
         {
-            myservo.write(wegstand);
-            delay(500);
+        case WIT:
+            if (newmem[0] > 200 && newmem[1] > 200 && newmem[2] > 180)
+            {
+                myservo.write(doorstand);
+                delay(750);
+                myservo.write(beginstand);
+                isdoorgelaten = true;
+            }
+            else
+            {
+                myservo.write(wegstand);
+                delay(750);
+                myservo.write(beginstand);
+            }
+            break;
+        case GROEN:
+            if (newmem[0] < 200 && newmem[1] > 150 && newmem[2] < 200)
+            {
+                myservo.write(doorstand);
+                delay(750);
+                myservo.write(beginstand);
+                isdoorgelaten = true;
+            }
+            else
+            {
+                myservo.write(wegstand);
+                delay(750);
+                myservo.write(beginstand);
+            }
+            break;
+        case DONKER:
+            if (newmem[0] < 150 && newmem[1] < 150 && newmem[2] < 150)
+            {
+                myservo.write(doorstand);
+                delay(750);
+                myservo.write(beginstand);
+                isdoorgelaten = true;
+            }
+            else
+            {
+                myservo.write(wegstand);
+                delay(750);
+                myservo.write(beginstand);
+            }
+            break;
+        case ALLES:
+            myservo.write(doorstand);
+            delay(750);
             myservo.write(beginstand);
-            transmitCAN(messageRejected);
+            isdoorgelaten = true;
+            break;
+        }
+        
+        if(isdoorgelaten)
+        {
+            transmitCAN(messagePassed);
         }
         else
         {
-            myservo.write(doorstand);
-            delay(1000);
-            myservo.write(beginstand);
-            transmitCAN(messagePassed);
+            transmitCAN(messageRejected);
         }
+        
         delay(400);
         color = colorSensor.read(); //read the color
         newmem[0] = map(color.red, 0, 1024, 0, 255);
@@ -126,5 +176,5 @@ void readRGB(RGBC color)
     mem[0] = newmem[0];
     mem[1] = newmem[1];
     mem[2] = newmem[2];
-    delay(400);
+    delay(400);  
 }
