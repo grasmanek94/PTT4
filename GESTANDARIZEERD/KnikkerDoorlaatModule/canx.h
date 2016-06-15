@@ -11,6 +11,18 @@ struct CustomCanMessage
     byte empty3;
 };
 
+struct CustomCanServerMessage
+{
+    byte senderAddress;
+    byte receiverAddress;
+    byte module_kleur;
+    byte policy_kleur;
+    byte module_hoogte;
+    byte policy_hoogte;
+    byte module_transparantie;
+    byte policy_transparantie;
+};
+
 #define CAN_Address_Invalid 0x00 // niemand / niks
 #define CAN_Address_Sweeper 0x01 // module van Rafal 
 #define CAN_Address_Infrared 0x02 // module van Mathieu
@@ -83,6 +95,7 @@ bool transmitCAN(CustomCanMessage& message)
     canmsg.data[6] = message.empty2;
     canmsg.data[7] = message.empty3;
     can.transmitCANMessage(canmsg, CAN_MS_TIMEOUT);
+    return true;
 }
 
 ///////////////////////////////////

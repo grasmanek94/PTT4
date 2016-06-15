@@ -167,6 +167,7 @@ public:
 
 MarblePassThrough passer(4, 2);
 bool lightning = false;
+bool enabled_module = true;
 
 bool ProcessIncommingMessages()
 {
@@ -174,23 +175,39 @@ bool ProcessIncommingMessages()
     CustomCanMessage smsg;
     if (can.receiveCANMessage(&canReceived, CAN_MS_TIMEOUT) && ParseMessage(canReceived, smsg))
     {
-        if (smsg.receiverAddress == CAN_MyAddress)
+        if(smsg.senderAddress == CAN_Address_Server)
         {
-            passer.GetMarble();
-        }
-        else if (smsg.receiverAddress == CAN_Address_Broadcast)
-        {
-            switch(smsg.function)
+            CustomCanServerMessage* policy = (CustomCanServerMessage*)&smsg;
+            if(policy->policy_kleur == 5 || policy->policy_hoogte == 4 || policy->policy_transparantie == 4) // niets
             {
-                case BROADCAST_MARBLE_ACCEPTED:
-                    if(smsg.senderAddress == CAN_Address_Transparency)
-                    {
+                enabled_module = false;
+                passer.StopMarble();
+            }
+            else
+            {
+                enabled_module = true;
+            }
+        }
+        else if(enabled_module)
+        {
+            if (smsg.receiverAddress == CAN_MyAddress)
+            {
+                passer.GetMarble();
+            }
+            else if (smsg.receiverAddress == CAN_Address_Broadcast)
+            {
+                switch(smsg.function)
+                {
+                    case BROADCAST_MARBLE_ACCEPTED:
+                        if(smsg.senderAddress == CAN_Address_Transparency)
+                        {
+                            passer.GetMarble();
+                        }
+                    break;
+                    case BROADCAST_MARBLE_REJECTED:
                         passer.GetMarble();
-                    }
-                break;
-                case BROADCAST_MARBLE_REJECTED:
-                    passer.GetMarble();
-                break;
+                    break;
+                }
             }
         }
     }
@@ -209,12 +226,19 @@ void setup()
 
 void loop() 
 {
-    if(passer.GettingMarbleTick())
+    if(enabled_module)
     {
-        lightning ^= 1;
-        digitalWrite(13, lightning);
-        Serial.println("DM");
-        transmitCAN(messageBroadcastMarblePassed);
+        if(passer.GettingMarbleTick())
+        {
+            lightning ^= 1;
+            digitalWrite(13, lightning);
+            Serial.println("DM");
+            transmitCAN(messageBroadcastMarblePassed);
+        }
+    }
+    else
+    {
+        digitalWrite(13, ((millis() / 250) % 2));
     }
 
     ProcessIncommingMessages();
