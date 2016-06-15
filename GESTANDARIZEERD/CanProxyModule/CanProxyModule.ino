@@ -71,14 +71,14 @@ bool handleSerial(CustomCanServerMessage *message)
         }
         if (beginPos != -1 && (serialBufferPos-1) - (beginPos+1) == 8)
         {
-            message->senderAddress        = CAN_MyAddress;
-            message->receiverAddress      = serialBuffer[beginPos+1];
-            message->module_kleur         = serialBuffer[beginPos+2];
-            message->policy_kleur         = serialBuffer[beginPos+3];
-            message->module_hoogte        = serialBuffer[beginPos+4];
-            message->policy_hoogte        = serialBuffer[beginPos+5];
-            message->module_transparantie = serialBuffer[beginPos+6];
-            message->policy_transparantie = serialBuffer[beginPos+7];
+            message->senderAddress        = serialBuffer[beginPos+1];
+            message->receiverAddress      = serialBuffer[beginPos+2];
+            message->module_kleur         = serialBuffer[beginPos+3];
+            message->policy_kleur         = serialBuffer[beginPos+4];
+            message->module_hoogte        = serialBuffer[beginPos+5];
+            message->policy_hoogte        = serialBuffer[beginPos+6];
+            message->module_transparantie = serialBuffer[beginPos+7];
+            message->policy_transparantie = serialBuffer[beginPos+8];
 
             memset(serialBuffer, 0, SERIALBUFF_SZ);
             serialBufferPos = 0;
