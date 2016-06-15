@@ -1,5 +1,4 @@
 #include <MCP2515.h>
-
 #define ArraySize 10
 #define ServoPin 3
 #define SensorPin A0
@@ -7,7 +6,6 @@
 #define CS_PIN    85
 #define RESET_PIN  7
 #define INT_PIN    84
-#define CAN_MyAddress 0x02
 
 MCP2515 can;
 
