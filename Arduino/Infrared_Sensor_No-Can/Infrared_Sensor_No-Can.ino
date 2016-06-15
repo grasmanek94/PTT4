@@ -1,7 +1,31 @@
+#include <MCP2515.h>
+
 #define ArraySize 10
 #define ServoPin 3
 #define SensorPin A0
 #include <Servo.h>
+#define CS_PIN    85
+#define RESET_PIN  7
+#define INT_PIN    84
+#define CAN_MyAddress 0x0B
+
+MCP2515 can;
+
+struct SerialMessage {
+  byte senderAddress;
+  byte module1;
+  byte policy1;
+  byte module2;
+  byte policy2;
+  byte module3;
+  byte policy3;
+  byte empty;
+};
+
+SerialMessage messageTrue;
+SerialMessage messageFalse;
+int canReceiveTimeoutMs = 20;
+int canTransmitTimeoutMs = 20;
 
 int Average = 0;
 bool IsInitialised = false;
@@ -32,7 +56,10 @@ void setup()
   Serial.begin(9600);
   myServo.attach(ServoPin);
   myServo.write(servo_rest);
+  InitCan();
   Blink();
+  messageTrue = CreateMessageTrue();
+  messageFalse = CreateMessageFalse();
   delay(200);
 }
 
@@ -113,6 +140,7 @@ void StateMachine(int* allow)
       myServo.write(servo_allow);
       delay(1000);
       myServo.write(servo_rest);
+      transmitCAN(messageTrue);
       state = Wait;
       delay(500);
       digitalWrite(13, LOW);
@@ -123,6 +151,7 @@ void StateMachine(int* allow)
       myServo.write(servo_reject);
       delay(1000);
       myServo.write(servo_rest);
+      transmitCAN(messageFalse);
       state = Wait;
       delay(500);
       digitalWrite(13, LOW);
