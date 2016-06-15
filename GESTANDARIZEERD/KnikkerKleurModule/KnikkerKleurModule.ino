@@ -58,25 +58,37 @@ void loop()
     
     if (can.receiveCANMessage(&msg, CAN_MS_TIMEOUT) && ParseMessage(msg, can_message))
     {
-        if(can_message.receiverAddress = CAN_MyAddress)
+        if(can_message.senderAddress == CAN_Address_Server)
         {
-            switch (can_message.function)
+            CustomCanServerMessage* policy = (CustomCanServerMessage*)&smsg;
+
+            switch (policy->policy_kleur)
             {
             case GROEN:
             case WIT:
             case DONKER:
             case ALLES:
-                kleurkeuze = can_message.function;
+                kleurkeuze = policy->policy_kleur;
                 break;
-            }
-            readRGB(color);
-            delay(100);
+            }    
         }
-        else if(can_message.receiverAddress = CAN_Address_Broadcast)
+        else
         {
-            //received broadcast message
+            if(can_message.receiverAddress == CAN_MyAddress)
+            {
+
+            }
+            else if(can_message.receiverAddress == CAN_Address_Broadcast)
+            {
+                //received broadcast message
+            }
         }
     }
+    
+    if(kleurkeuze != 5)
+    {
+        readRGB(color);  
+    } 
 }
 
 void readRGB(RGBC color) 
