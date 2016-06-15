@@ -7,7 +7,7 @@
 #define CS_PIN    85
 #define RESET_PIN  7
 #define INT_PIN    84
-#define CAN_MyAddress 0x0B
+#define CAN_MyAddress 0x02
 
 MCP2515 can;
 
@@ -26,6 +26,7 @@ SerialMessage messageTrue;
 SerialMessage messageFalse;
 int canReceiveTimeoutMs = 20;
 int canTransmitTimeoutMs = 20;
+int Policy = 1;
 
 int Average = 0;
 bool IsInitialised = false;
@@ -64,6 +65,10 @@ void setup()
 }
 
 void loop() {
+  if(SetPolicy())
+  {
+    Serial.println("set Policy");
+  }
   Serial.println(Average);
   int allow = 0;
   StateMachine(&allow);
@@ -130,34 +135,77 @@ void StateMachine(int* allow)
   }
   if (state == Measure && Average < Threshold)
   {
-    delay(200);
-    int CurrentVal = analogRead(SensorPin);
-    Serial.println(CurrentVal);
-    digitalWrite(13, HIGH);
-    if (state == Measure && CurrentVal > large_marble_size && CurrentVal < small_marble_size)//(Average > large_marble_size && Average < small_marble_size))
+    int CurrentVal = ReadVal();
+    CheckSizeOfMarbleToPolicy(CurrentVal);
+  }
+  delay(1);
+  digitalWrite(13, LOW);
+}
+
+int CheckSizeOfMarbleToPolicy(int CurrentVal)
+{
+  if (Policy == 1)
+  {
+    if (state == Measure && CurrentVal > large_marble_size && CurrentVal < small_marble_size)
     {
-      Serial.println("allow");
-      myServo.write(servo_allow);
-      delay(1000);
-      myServo.write(servo_rest);
-      transmitCAN(messageTrue);
-      state = Wait;
-      delay(500);
-      digitalWrite(13, LOW);
+      AllowMarble();
     }
     if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
     {
-      Serial.println("reject");
-      myServo.write(servo_reject);
-      delay(1000);
-      myServo.write(servo_rest);
-      transmitCAN(messageFalse);
-      state = Wait;
-      delay(500);
-      digitalWrite(13, LOW);
+      RejectMarble();
     }
   }
-  delay(1);
+  if (Policy == 2)
+  {
+    if (state == Measure && CurrentVal < large_marble_size && CurrentVal > small_marble_size)
+    {
+      AllowMarble();
+    }
+    if (state == Measure && CurrentVal > large_marble_size && CurrentVal > small_marble_size)
+    {
+      RejectMarble();
+    }
+  }
+  if(Policy == 3)
+  {
+    AllowMarble();
+  }
+  if(Policy == 4)
+  {
+    RejectMarble();
+  }
+}
+
+int ReadVal()
+{
+  delay(200);
+  int CurrentVal = analogRead(SensorPin);
+  Serial.println(CurrentVal);
+  digitalWrite(13, HIGH);
+  return CurrentVal;
+}
+
+void AllowMarble()
+{
+  Serial.println("allow");
+  myServo.write(servo_allow);
+  delay(1000);
+  myServo.write(servo_rest);
+  transmitCAN(messageTrue);
+  state = Wait;
+  delay(500);
+  digitalWrite(13, LOW);
+}
+
+void RejectMarble()
+{
+  Serial.println("reject");
+  myServo.write(servo_reject);
+  delay(1000);
+  myServo.write(servo_rest);
+  transmitCAN(messageFalse);
+  state = Wait;
+  delay(500);
   digitalWrite(13, LOW);
 }
 
