@@ -8,10 +8,17 @@ bool SetPolicy()
     Serial.println("Message");
     CustomCanMessage message = ParseMessage(canReceived);
     PrintMessage(message);
-    if (message.module2 == CAN_MyAddress)
+    if (message.data3 == CAN_MyAddress)
     {
-      Policy = message.policy2;
+      Policy = message.data4;
       return true;
+    }
+    if(message.senderAddress == 0xDD)
+    {
+      if(message.data6 == 0xFF || message.data6 == 0xAA)
+      {
+        IsAllowedToPass = true;
+      }
     }
   }
   return false;
