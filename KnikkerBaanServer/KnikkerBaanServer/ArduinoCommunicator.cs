@@ -13,8 +13,8 @@ namespace KnikkerBaanServer
         public event Action<string> MessageFound;
 
         private const int bufferSize = 32;
-        public char messageStart = '>';
-        public char messageEnd = ';';
+        public char messageStart = '[';
+        public char messageEnd = ']';
 
         private SerialPort serialPort;
         private string buffer;
@@ -29,12 +29,24 @@ namespace KnikkerBaanServer
 
         public bool SendBytes(byte[] message)
         {
-            if (serialPort.IsOpen)
+            try
             {
-                serialPort.Write(message, 0, message.Length);
-                return true;
+                if (!serialPort.IsOpen)
+                {
+                    serialPort.Open();
+                }
+                if (serialPort.IsOpen)
+                {
+                    serialPort.Write(message, 0, message.Length);
+                    serialPort.Close();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         public bool SendMessage(string message)
