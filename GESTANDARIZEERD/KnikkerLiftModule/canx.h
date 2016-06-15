@@ -35,13 +35,14 @@ struct CustomCanServerMessage
 #define CAN_Address_Server 0x07 // module van X
 #define CAN_Address_Broadcast 0xFF // module van iedereen
 
-#define CAN_MyAddress CAN_Address_Color
+#define CAN_MyAddress CAN_Address_Sweeper
 
 #define CAN_MS_TIMEOUT 20
 
 #define LIFT_START 0x01
 #define LIFT_STOP 0x02
 
+#define BROADCAST_SWEEPER_MARBLE_PASSED 0x01
 #define BROADCAST_MARBLE_ACCEPTED 0x01
 #define BROADCAST_MARBLE_REJECTED 0x02
 #define BROADCAST_STOP_ALL 0x03
@@ -63,8 +64,9 @@ void InitCan()
     }
 }
 
+CustomCanMessage messageLiftStop {CAN_MyAddress, CAN_Address_Lift, LIFT_STOP, 0, 0, 0, 0, 0};
+CustomCanMessage messageLiftStart {CAN_MyAddress, CAN_Address_Lift, LIFT_START, 0, 0, 0, 0, 0};
 CustomCanMessage messagePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
-CustomCanMessage messageRejected {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
 
 bool ParseMessage(CANMSG& message, CustomCanMessage& msg)
 {

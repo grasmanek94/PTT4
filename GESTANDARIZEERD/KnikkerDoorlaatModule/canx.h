@@ -42,7 +42,6 @@ struct CustomCanServerMessage
 #define LIFT_START 0x01
 #define LIFT_STOP 0x02
 
-#define BROADCAST_SWEEPER_MARBLE_PASSED 0x01
 #define BROADCAST_MARBLE_ACCEPTED 0x01
 #define BROADCAST_MARBLE_REJECTED 0x02
 #define BROADCAST_STOP_ALL 0x03
@@ -66,7 +65,7 @@ void InitCan()
 
 CustomCanMessage messageLiftStop {CAN_MyAddress, CAN_Address_Lift, LIFT_STOP, 0, 0, 0, 0, 0};
 CustomCanMessage messageLiftStart {CAN_MyAddress, CAN_Address_Lift, LIFT_START, 0, 0, 0, 0, 0};
-CustomCanMessage messageBroadcastMarblePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_SWEEPER_MARBLE_PASSED, 0, 0, 0, 0, 0};
+CustomCanMessage messagePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
 
 bool ParseMessage(CANMSG& message, CustomCanMessage& msg)
 {

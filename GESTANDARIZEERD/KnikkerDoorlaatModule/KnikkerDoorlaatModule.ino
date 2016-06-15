@@ -233,7 +233,7 @@ void loop()
             lightning ^= 1;
             digitalWrite(13, lightning);
             Serial.println("DM");
-            transmitCAN(messageBroadcastMarblePassed);
+            transmitCAN(messagePassed);
         }
     }
     else
