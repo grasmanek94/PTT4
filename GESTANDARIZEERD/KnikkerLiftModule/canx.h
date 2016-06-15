@@ -35,7 +35,7 @@ struct CustomCanServerMessage
 #define CAN_Address_Server 0x07 // module van X
 #define CAN_Address_Broadcast 0xFF // module van iedereen
 
-#define CAN_MyAddress CAN_Address_Sweeper
+#define CAN_MyAddress CAN_Address_Lift
 
 #define CAN_MS_TIMEOUT 20
 
