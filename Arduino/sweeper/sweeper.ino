@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include <Arduino.h>
 #include <MCP2515.h>
-#include <canx.h>
+#include "canx.h"
 
 class MarblePassThrough
 {
@@ -218,10 +218,5 @@ void loop()
     }
 
     ProcessIncommingMessages();
-    if(!passer.GettingMarble())
-    {
-        delay(5000);
-        passer.GetMarble();
-    }
 }
 
