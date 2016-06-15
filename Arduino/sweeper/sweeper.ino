@@ -1,5 +1,24 @@
 #include <Servo.h>
 #include <Arduino.h>
+#include <MCP2515.h>
+
+#define CAN_MyAddress 0x0A
+
+MCP2515 can;
+
+struct SerialMessage {
+  byte senderAddress;
+  byte receiverAddress;
+  byte function;
+  byte measure;
+  byte diagnostics;
+  byte empty1;
+  byte empty2;
+  byte empty3;
+};
+
+SerialMessage messageTrue;
+SerialMessage messageFalse;
 
 class MarblePassThrough
 {
