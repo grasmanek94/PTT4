@@ -64,6 +64,7 @@ class MarblePassThrough
 
     void Switch()
     {
+        transmitCAN(messageLiftStart);
         if(!move_state)
         {
             LoadMarble();
