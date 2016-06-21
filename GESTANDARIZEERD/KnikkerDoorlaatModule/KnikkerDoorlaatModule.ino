@@ -226,6 +226,7 @@ void setup()
     passer.GetMarble();
 }
 
+long timeLast = 0;
 void loop() 
 {
     if(enabled_module)
@@ -240,7 +241,13 @@ void loop()
     }
     else
     {
-        digitalWrite(13, ((millis() / 250) % 2));
+        long timeNow = millis();
+        digitalWrite(13, ((timeNow / 250) % 2));
+        if(timeNow - timeLast > 1000)
+        {
+            timeLast = timeNow;
+            transmitCAN(messageLiftStop);
+        }
     }
 
     ProcessIncommingMessages();
