@@ -4,7 +4,8 @@
 #include "canx.h"
 #include "pid.h"
 
-// 1 rotation = 535 pulses (approx)
+// 1 rotation = 535 pulses (approx) ~ 1.5s
+// 1 s = 357 pulses
 
 #define INT_PIN 3
 
@@ -74,18 +75,18 @@ void setup()
 
 long timeLast = 0;
 
-const double MIN_ROTATIONS = -540.0;
-const double MAX_ROTATIONS = 540.0;
-const double TARGET_ROTATIONS = 350.0;
+const double MIN_ROTATIONS = 0.0;
+const double MAX_ROTATIONS = 360.0;
+const double TARGET_ROTATIONS = 360.0;
 
-const double PID_KP = 1.0;
-const double PID_KI = 1.0;
-const double PID_KD = 1.0;
+const double PID_KP = 2.00;
+const double PID_KI = 0.05;
+const double PID_KD = 0.01;
 
 const double MIN_POWER = 260.0;
 const double MAX_POWER = 400.0;
 
-PID pid_controller(MIN_ROTATIONS, MAX_ROTATIONS, PID_KP, PID_KD, PID_KI);
+PID pid_controller(MAX_ROTATIONS, MIN_ROTATIONS, PID_KP, PID_KD, PID_KI);
 
 void loop() 
 {
@@ -105,15 +106,11 @@ void loop()
 
             double dt_seconds = (double)deltaTime / 1000.0;
             timeLast = timeNow;
-            double value_to_set = -1.0 * pid_controller.calculate(TARGET_ROTATIONS, totalPulses, dt_seconds);
+            double value_to_set = pid_controller.calculate(TARGET_ROTATIONS * dt_seconds * 4.0, totalPulses, dt_seconds);
             double motor_speed = MIN_POWER + ((value_to_set/(MAX_ROTATIONS - MIN_ROTATIONS)) * (MAX_POWER - MIN_POWER));
-            Serial.print("MS:");
-            Serial.print(motor_speed);
-            Serial.print("VS:");
-            Serial.print(value_to_set);
-            Serial.print("TP:");                
-            Serial.println(totalPulses);
+
             motorController.setSpeeds((int)motor_speed, (int)motor_speed);
+            Serial.println(motor_speed);
         }
  
         //motorController.setSpeeds((int)power, (int)power);

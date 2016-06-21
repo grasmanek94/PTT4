@@ -72,24 +72,6 @@ double PIDImpl::calculate( double setpoint, double pv, double dt )
     // Calculate total output
     double output = Pout + Iout + Dout;
 
-
-    Serial.print("E:");
-    Serial.print(error);
-    Serial.print("Po:");
-    Serial.print(Pout);
-    Serial.print("Int:");   
-    Serial.print(_integral);
-    Serial.print("Io:");
-    Serial.print(Iout);
-    Serial.print("drv:");    
-    Serial.print(derivative);
-    Serial.print("Do:");    
-    Serial.print(Dout);
-    Serial.print("O:");    
-    Serial.print(output);
-    Serial.print("pe:");    
-    Serial.print(_pre_error);    
-    
     // Restrict to max/min
     if( output > _max )
         output = _max;
