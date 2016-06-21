@@ -176,6 +176,8 @@ bool ProcessIncommingMessages()
     CustomCanMessage smsg;
     if (can.receiveCANMessage(&canReceived, CAN_MS_TIMEOUT) && ParseMessage(canReceived, smsg))
     {
+        Serial.print("Received message from");
+        Serial.println(smsg.senderAddress);
         if(smsg.senderAddress == CAN_Address_Server)
         {
             CustomCanServerMessage* policy = (CustomCanServerMessage*)&smsg;

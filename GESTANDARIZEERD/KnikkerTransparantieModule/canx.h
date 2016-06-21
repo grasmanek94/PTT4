@@ -1,5 +1,3 @@
-#include <SPI.h>
-#include <MCP2515.h> //modified - public readReg(byte regno)
 ///////////////////////////////////
 struct CustomCanMessage
 {
@@ -35,12 +33,9 @@ struct CustomCanServerMessage
 #define CAN_Address_Server 0x07 // module van X
 #define CAN_Address_Broadcast 0xFF // module van iedereen
 
-#define CAN_MyAddress CAN_Address_Color
+#define CAN_MyAddress CAN_Address_Transparency
 
 #define CAN_MS_TIMEOUT 20
-
-#define LIFT_START 0x01
-#define LIFT_STOP 0x02
 
 #define BROADCAST_MARBLE_ACCEPTED 0x01
 #define BROADCAST_MARBLE_REJECTED 0x02
