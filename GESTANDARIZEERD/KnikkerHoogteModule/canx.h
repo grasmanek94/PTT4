@@ -61,7 +61,7 @@ void InitCan()
 }
 
 CustomCanMessage messagePassed {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
-CustomCanMessage messageRejected {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_ACCEPTED, 0, 0, 0, 0, 0};
+CustomCanMessage messageRejected {CAN_MyAddress, CAN_Address_Broadcast, BROADCAST_MARBLE_REJECTED, 0, 0, 0, 0, 0};
 
 bool ParseMessage(CANMSG& message, CustomCanMessage& msg)
 {

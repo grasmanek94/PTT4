@@ -7,7 +7,7 @@
 #define RESET_PIN  7
 #define INT_PIN    84
 
-int Policy = 3;
+int Policy = 4;
 
 int Average = 0;
 bool IsInitialised = false;
