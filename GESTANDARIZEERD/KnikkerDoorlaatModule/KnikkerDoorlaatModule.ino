@@ -222,6 +222,7 @@ void setup()
     InitCan();
     
     passer.Setup();
+    passer.GetMarble();
 }
 
 void loop() 

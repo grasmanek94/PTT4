@@ -15,7 +15,7 @@ volatile long pulseCount;
 volatile long pulsesPerSecond;
 
 bool enabled_module = true;
-int lift_state = 1; //0 disabled 1 running 2 stopped
+int lift_state = 2; //0 disabled 1 running 2 stopped
 bool ProcessIncommingMessages()
 {
     CANMSG canReceived;
