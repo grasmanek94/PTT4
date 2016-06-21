@@ -101,8 +101,7 @@ void readRGB(RGBC color)
   newmem[2] = map(color.blue, 0, 1024, 0, 255);
   Serial.print(" B");
   Serial.println(newmem[2]);
-
-  if ((newmem[0] - mem[0]) > 6 || (newmem[0] - mem[0]) < -6)
+  if ((newmem[0] - mem[0]) > 1 || (newmem[0] - mem[0]) < - 1 ||(newmem[1] - mem[1]) > 1 || (newmem[1] - mem[1]) < - 1 ||(newmem[2] - mem[2]) > 1 || (newmem[2] - mem[2]) < - 1)
   {
     delay(500);
     color = colorSensor.read(); //read the color
