@@ -8,7 +8,7 @@
 #define wegstand 180
 #define GROEN  1
 #define WIT    2
-#define DONKER 3
+#define ANDERS 3
 #define ALLES  4
 #define NIETS  5
 
@@ -65,7 +65,7 @@ void loop()
       {
         case GROEN:
         case WIT:
-        case DONKER:
+        case ANDERS:
         case ALLES:
         case NIETS:
           kleurkeuze = policy->policy_kleur;
@@ -127,7 +127,7 @@ void readRGB(RGBC color)
         }
         break;
       case GROEN:
-        if (newmem[0] < 200 && newmem[1] > 150 && newmem[2] < 200)
+        if (newmem[0] < 240 && newmem[1] > 150 && newmem[2] < 200)
         {
           myservo.write(doorstand);
           delay(750);
@@ -141,8 +141,8 @@ void readRGB(RGBC color)
           myservo.write(beginstand);
         }
         break;
-      case DONKER:
-        if (newmem[0] < 150 && newmem[1] < 150 && newmem[2] < 150)
+      case ANDERS:
+        if (newmem[0] < 160 && newmem[1] < 150 && newmem[2] < 160)
         {
           myservo.write(doorstand);
           delay(750);
