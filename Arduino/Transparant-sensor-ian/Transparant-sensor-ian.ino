@@ -7,7 +7,7 @@ CANMSG msg;
 CustomCanMessage message;
 
 Servo servo;
-int servoPin = 3;/
+int servoPin = 3;
 int servo_rest = 60;
 int servo_reject = 165;
 int servo_allow = 10;
@@ -43,7 +43,7 @@ enum Allow
 
 State state = Wait;
 Mode mode = Both;
-Allow allow = Yes;
+Allow allow = No;
 
 
 void setup()
@@ -53,13 +53,11 @@ void setup()
   servo.write(servo_rest);
   InitCan();
   delay(1000);
-  oldstate = analogRead(A0);
+  oldstate = CalculateAverage();
 }
 
 void loop()
 {
-  MoveArray();
-  MovingAverage[0] = analogRead(A0);
   ReadMessage();
   MeasureMarble();
   SendData(); 
@@ -146,7 +144,7 @@ void SendData()
     delay(1000);
     servo.write(servo_rest);
     delay(1000);
-    oldstate = analogRead(A0);
+    oldstate = CalculateAverage();
     delay(500);
     state = Wait;
   }
@@ -161,32 +159,24 @@ void SendData()
     delay(1000);
     servo.write(servo_rest);
     delay(1000);
-    oldstate = analogRead(A0);
+    oldstate = CalculateAverage();
     delay(500);
     state = Wait;
   }
   else
   {
-    oldstate = value;
+    oldstate = CalculateAverage();
   }
 }
 
 int CalculateAverage()
 {
   int temp = 0;
-  for(int i = 0;i < AverageSize; i++)
+  for(int i = 0; i < 10; i++)
   {
-    temp += MovingAverage[i];
+    temp += analogRead(A0);
+    delay(50);
   }
-  temp = temp / AverageSize;
+  temp = temp / 10;
   return temp;
-}
-
-void MoveArray()
-{
-  MovingAverage[5] = MovingAverage[4];
-  MovingAverage[4] = MovingAverage[3];
-  MovingAverage[3] = MovingAverage[2];
-  MovingAverage[2] = MovingAverage[1];
-  MovingAverage[1] = MovingAverage[0];
 }
