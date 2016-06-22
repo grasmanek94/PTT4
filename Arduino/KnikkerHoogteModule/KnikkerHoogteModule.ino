@@ -6,8 +6,19 @@
 #define CS_PIN    85
 #define RESET_PIN  7
 #define INT_PIN    84
+#define ErrorFactor 10
+#define SmallMarbleError 20
+#define LargeMarbleError 40
 
-int Policy = 4;
+/*
+ * PolicyTable:
+ * 1.Pass Through Big, Reject Small
+ * 2.Pass Through Small, Reject Big
+ * 3.Pass Through All 
+ * 4.Reject All
+ */
+
+int Policy = 3;
 
 int Average = 0;
 bool IsInitialised = false;
@@ -19,8 +30,8 @@ Servo myServo;
 
 int small_marble_size = 422;
 int large_marble_size = 440;
-int Threshold = 418;
-int Default_value = 418;
+int Threshold;
+int Default_value = 0;
 
 enum State
 {
@@ -41,6 +52,16 @@ void setup()
   myServo.write(servo_rest);
   InitCan();
   Blink();
+  Initialise();
+  Threshold = Default_value + ErrorFactor;
+  small_marble_size = Threshold + SmallMarbleError;
+  large_marble_size = Threshold + LargeMarbleError;
+  Serial.print("Threshold:");
+  Serial.println(Threshold);
+  Serial.print("small_marble_size:");
+  Serial.println(small_marble_size);
+  Serial.print("large_marble_size:");
+  Serial.println(large_marble_size);
   delay(200);
 }
 
