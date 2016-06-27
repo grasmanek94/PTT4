@@ -17,6 +17,19 @@ namespace Knikkerbaan_SCADA
     public enum Node2Actions : byte { Transparant=0x01, Opaque=0x02, Alle=0x03, Geen=0x04 };
     public enum Node3Actions : byte { Groen = 0x01, Wit=0x02, Donker=0x03, Alle=0x04, Geen=0x05 };
 
+    public enum NodeAddresses : byte
+    {
+        CAN_Address_Invalid = 0x00, // niemand / niks
+        CAN_Address_Sweeper = 0x01, // module van Rafal 
+        CAN_Address_Infrared = 0x02, // module van Mathieu
+        CAN_Address_Lift = 0x03, // modulfe van Thomas & Raf
+        CAN_Address_Proxy = 0x04, // module van Minhtriet
+        CAN_Address_Color = 0x05, // module van Coen
+        CAN_Address_Transparency = 0x06, // module van Thomas
+        CAN_Address_Server = 0x07, // module van X
+        CAN_Address_Broadcast = 0xFF // module van iedereen
+    };
+
     public partial class Form1 : Form
     {
         ScadaServiceClient proxy;
@@ -38,8 +51,8 @@ namespace Knikkerbaan_SCADA
         private void SetPolicyButton_Click(object sender, EventArgs e)
         {
             Policy policy = new Policy();
-            policy.senderAddress = 
-            policy.receiverAddress = 
+            policy.senderAddress = (byte)NodeAddresses.CAN_Address_Server;
+            policy.receiverAddress = (byte)NodeAddresses.CAN_Address_Broadcast;
             policy.PolicyModuleOne = (byte)NodeNames.Node1;
             policy.PolicyValueOne = lookupPolicy(NodeNames.Node1, PolicyNode1Combobox.SelectedItem.ToString());
             policy.PolicyModuleTwo = (byte)NodeNames.Node2;

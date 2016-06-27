@@ -49,16 +49,6 @@ namespace KnikkerBaanServer
             }
         }
 
-        public bool SendMessage(string message)
-        {
-            if (serialPort.IsOpen)
-            {
-                serialPort.Write(message);
-                return true;
-            }
-            return false;
-        }
-
         public void Start()
         {
             buffer = "";
@@ -103,7 +93,6 @@ namespace KnikkerBaanServer
                 {
                     break;
                 }
-
 
                 waithandler.WaitOne(1);
             }
