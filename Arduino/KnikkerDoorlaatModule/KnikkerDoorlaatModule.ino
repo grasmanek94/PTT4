@@ -191,13 +191,23 @@ bool ProcessIncommingMessages()
             {
                 enabled_module = false;
                 passer.StopMarble();
-                Serial.println("Doorlaat Module Stopped - Any policy == 'niets'");
+                Serial.println("Doorlaat Module Stopped - Any policy == 'niets'");                           
             }
             else
             {
                 enabled_module = true;
                 Serial.println("Doorlaat Module enabled - None policy == 'niets'");
             }
+            Serial.println("Policy info: ");
+            Serial.print(" (Color:");
+            Serial.print(policy->policy_kleur);
+            Serial.println(")");
+            Serial.print(" (Height:");
+            Serial.print(policy->policy_hoogte);
+            Serial.println(")");       
+            Serial.print(" (Transparency:");
+            Serial.print(policy->policy_transparantie);
+            Serial.println(")");             
         }
         else if(enabled_module)
         {
