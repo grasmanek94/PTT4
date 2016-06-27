@@ -51,6 +51,7 @@ class MarblePassThrough
         time_start = millis();
         time_end = time_start + move_time;
         move_state = false;
+        Serial.println("Pass Marble");
     }
 
     void LoadMarble()
@@ -59,11 +60,13 @@ class MarblePassThrough
         pos_end = 107;   
         time_start = millis();
         time_end = time_start + move_time;      
-        move_state = true;       
+        move_state = true;    
+        Serial.println("Load Marble");   
     }
 
     void Switch()
     {
+        Serial.println("SWITCH - Lift START Requested");
         transmitCAN(messageLiftStart);
         if(!move_state)
         {
@@ -93,7 +96,8 @@ class MarblePassThrough
         {
             return false;
         }
-        
+
+        Serial.println("DETECTED");
         last_detect_time = time_now;
         return true;       
     }
@@ -148,6 +152,7 @@ public:
         {
             getting_marble = true;
             transmitCAN(messageLiftStart);
+            Serial.println("START - Lift START Requested");
         }
     }
 
@@ -157,6 +162,7 @@ public:
         {
             getting_marble = false;
             transmitCAN(messageLiftStop);
+            Serial.println("STOP - Lift STOP Requested");
         }
     }
 
@@ -185,10 +191,12 @@ bool ProcessIncommingMessages()
             {
                 enabled_module = false;
                 passer.StopMarble();
+                Serial.println("Doorlaat Module Stopped - Any policy == 'niets'");
             }
             else
             {
                 enabled_module = true;
+                Serial.println("Doorlaat Module enabled - None policy == 'niets'");
             }
         }
         else if(enabled_module)
@@ -237,7 +245,7 @@ void loop()
         {
             lightning ^= 1;
             digitalWrite(13, lightning);
-            Serial.println("DM");
+            Serial.println("Message Passed");
             transmitCAN(messagePassed);
         }
     }
@@ -249,6 +257,7 @@ void loop()
         {
             timeLast = timeNow;
             transmitCAN(messageLiftStop);
+            Serial.println("TIMER - Lift STOP Requested");
         }
     }
 
