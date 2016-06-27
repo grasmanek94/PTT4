@@ -43,6 +43,11 @@
             this.tbRawMsg = new System.Windows.Forms.TextBox();
             this.btnRawMsg = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ServerNameTextbox
@@ -55,30 +60,30 @@
             // PolicyNode1Combobox
             // 
             this.PolicyNode1Combobox.FormattingEnabled = true;
-            this.PolicyNode1Combobox.Location = new System.Drawing.Point(13, 171);
+            this.PolicyNode1Combobox.Location = new System.Drawing.Point(6, 38);
             this.PolicyNode1Combobox.Name = "PolicyNode1Combobox";
-            this.PolicyNode1Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode1Combobox.Size = new System.Drawing.Size(75, 21);
             this.PolicyNode1Combobox.TabIndex = 1;
             // 
             // PolicyNode2Combobox
             // 
             this.PolicyNode2Combobox.FormattingEnabled = true;
-            this.PolicyNode2Combobox.Location = new System.Drawing.Point(230, 171);
+            this.PolicyNode2Combobox.Location = new System.Drawing.Point(6, 78);
             this.PolicyNode2Combobox.Name = "PolicyNode2Combobox";
-            this.PolicyNode2Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode2Combobox.Size = new System.Drawing.Size(75, 21);
             this.PolicyNode2Combobox.TabIndex = 2;
             // 
             // PolicyNode3Combobox
             // 
             this.PolicyNode3Combobox.FormattingEnabled = true;
-            this.PolicyNode3Combobox.Location = new System.Drawing.Point(435, 171);
+            this.PolicyNode3Combobox.Location = new System.Drawing.Point(6, 118);
             this.PolicyNode3Combobox.Name = "PolicyNode3Combobox";
-            this.PolicyNode3Combobox.Size = new System.Drawing.Size(121, 21);
+            this.PolicyNode3Combobox.Size = new System.Drawing.Size(75, 21);
             this.PolicyNode3Combobox.TabIndex = 3;
             // 
             // SetPolicyButton
             // 
-            this.SetPolicyButton.Location = new System.Drawing.Point(602, 169);
+            this.SetPolicyButton.Location = new System.Drawing.Point(6, 146);
             this.SetPolicyButton.Name = "SetPolicyButton";
             this.SetPolicyButton.Size = new System.Drawing.Size(75, 23);
             this.SetPolicyButton.TabIndex = 4;
@@ -170,11 +175,55 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Enter hex values separated by commas, eg: 0x01,0x02, for 8 bytes kthx";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Hoogte";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 62);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Transparantie";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 102);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Kleur";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.PolicyNode2Combobox);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.PolicyNode1Combobox);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.PolicyNode3Combobox);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.SetPolicyButton);
+            this.groupBox1.Location = new System.Drawing.Point(588, 63);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(89, 188);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Filter";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 261);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRawMsg);
             this.Controls.Add(this.tbRawMsg);
@@ -185,13 +234,11 @@
             this.Controls.Add(this.Node2Label);
             this.Controls.Add(this.Node1Label);
             this.Controls.Add(this.ConnectToServerButton);
-            this.Controls.Add(this.SetPolicyButton);
-            this.Controls.Add(this.PolicyNode3Combobox);
-            this.Controls.Add(this.PolicyNode2Combobox);
-            this.Controls.Add(this.PolicyNode1Combobox);
             this.Controls.Add(this.ServerNameTextbox);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,6 +261,10 @@
         private System.Windows.Forms.TextBox tbRawMsg;
         private System.Windows.Forms.Button btnRawMsg;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
