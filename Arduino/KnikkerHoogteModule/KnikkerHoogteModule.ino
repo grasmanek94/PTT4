@@ -6,19 +6,19 @@
 #define CS_PIN    85
 #define RESET_PIN  7
 #define INT_PIN    84
-#define ErrorFactor 10
-#define SmallMarbleError 20
-#define LargeMarbleError 40
+#define ErrorFactor 16
+#define SmallMarbleError 10
+#define LargeMarbleError 20
 
 /*
- * PolicyTable:
- * 1.Pass Through Big, Reject Small
- * 2.Pass Through Small, Reject Big
- * 3.Pass Through All 
- * 4.Reject All
- */
+   PolicyTable:
+   1.Pass Through Big, Reject Small
+   2.Pass Through Small, Reject Big
+   3.Pass Through All
+   4.Reject All
+*/
 
-int Policy = 3;
+int Policy = 1;
 
 int Average = 0;
 bool IsInitialised = false;
@@ -31,6 +31,7 @@ Servo myServo;
 int small_marble_size = 422;
 int large_marble_size = 440;
 int Threshold;
+int InvalidThreshold;
 int Default_value = 0;
 
 enum State
@@ -41,7 +42,7 @@ enum State
 
 State state;
 
-int servo_rest = 124;
+int servo_rest = 125;
 int servo_reject = 180;
 int servo_allow = 10;
 
@@ -56,6 +57,7 @@ void setup()
   Threshold = Default_value + ErrorFactor;
   small_marble_size = Threshold + SmallMarbleError;
   large_marble_size = Threshold + LargeMarbleError;
+  InvalidThreshold = Default_value - ErrorFactor * 2;
   Serial.print("Threshold:");
   Serial.println(Threshold);
   Serial.print("small_marble_size:");
@@ -126,14 +128,13 @@ void loop()
   {
     Serial.println("set Policy");
   }
-
-  Serial.println(Average);
   int allow = 0;
   StateMachine(&allow);
   if (allow == 0)
   {
     MovingAverage();
   }
+  CommandTrigger();
 }
 
 void MovingAverage()
@@ -182,7 +183,7 @@ void AddSingleValueToArray()
 
 void StateMachine(int* allow)
 {
-  if (state == Wait && Average < Default_value)
+  if (state == Wait && Average < Threshold && Average > InvalidThreshold)
   {
     //Serial.println("Measure");
     Serial.print("Thing detected");
@@ -193,10 +194,15 @@ void StateMachine(int* allow)
   }
   if (state == Measure && Average > Threshold)
   {
-    Serial.println("Trigger");
-    Serial.println(Policy);
     int CurrentVal = ReadVal();
+    Serial.println("Waiting");
+    Serial.println(CurrentVal);
     CheckSizeOfMarbleToPolicy(CurrentVal);
+  }
+  if (state == Measure && Average < InvalidThreshold)
+  {
+    RejectMarble();
+    delay(500);
   }
   delay(1);
   digitalWrite(13, LOW);
@@ -206,31 +212,30 @@ void CheckSizeOfMarbleToPolicy(int CurrentVal)
 {
   if (IsAllowedToPass)
   {
-    if (Policy == 1)
-    {
-      if (state == Measure && CurrentVal > large_marble_size && CurrentVal > small_marble_size)
-      {
-        AllowMarble();
-      }
-      if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
-      {
-        RejectMarble();
-      }
-    }
     if (Policy == 2)
     {
       if (state == Measure && CurrentVal < large_marble_size && CurrentVal > small_marble_size)
       {
         AllowMarble();
       }
-      if (state == Measure && CurrentVal < large_marble_size && CurrentVal < small_marble_size)
+      if (state == Measure && CurrentVal < small_marble_size)
+      {
+        RejectMarble();
+      }
+    }
+    if (Policy == 1)
+    {
+      if (state == Measure && CurrentVal > large_marble_size && CurrentVal > small_marble_size)
+      {
+        AllowMarble();
+      }
+      if (state == Measure && CurrentVal < large_marble_size)
       {
         RejectMarble();
       }
     }
     if (Policy == 3)
     {
-      Serial.println("ping");
       AllowMarble();
     }
     if (Policy == 4)
@@ -244,7 +249,6 @@ int ReadVal()
 {
   delay(200);
   int CurrentVal = analogRead(SensorPin);
-  Serial.println(CurrentVal);
   digitalWrite(13, HIGH);
   return CurrentVal;
 }
@@ -284,5 +288,21 @@ void Blink()
   delay(200);
   digitalWrite(13, LOW);
   delay(200);
+}
+
+void CommandTrigger()
+{
+  if (Serial.available() > 0)
+  {
+    switch (Serial.read())
+    {
+      case '1':
+      AllowMarble();
+        break;
+      case '2':
+      RejectMarble();
+        break;
+    }
+  }
 }
 

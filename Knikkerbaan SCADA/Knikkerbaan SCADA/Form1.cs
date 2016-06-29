@@ -15,7 +15,7 @@ namespace Knikkerbaan_SCADA
     public enum NodeNames : byte { NodePC=0x01, Node1=0x02, Node2=0x03, Node3=0x04,Node4=0x05,Node5=0x06 };
     public enum Node1Actions : byte { Hoog=0x01, Laag=0x02, Alle=0x03, Geen=0x04 };
     public enum Node2Actions : byte { Transparant=0x01, Opaque=0x02, Alle=0x03, Geen=0x04 };
-    public enum Node3Actions : byte { Groen = 0x01, Wit=0x02, Donker=0x03, Alle=0x04, Geen=0x05 };
+    public enum Node3Actions : byte { Groen = 0x01, Wit=0x02, Donker=0x03, Geen=0x04, Alle = 0x05 };
 
     public enum NodeAddresses : byte
     {

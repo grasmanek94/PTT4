@@ -4,7 +4,7 @@
 #include "canx.h"
 
 #define doorstand 30
-#define beginstand 80
+#define beginstand 82
 #define wegstand 180
 #define GROEN  1
 #define WIT    2
@@ -18,7 +18,7 @@ int sensorLed_pin = 2; //LED on the ADJDS-311
 int pos = 0;    // variable to store the servo position
 int mem[] = {0, 0, 0};
 int newmem[] = {0, 0, 0};
-int kleurkeuze = ALLES;
+int kleurkeuze = GROEN;
 
 ADJDS311 colorSensor(sensorLed_pin);
 CustomCanMessage can_message;
@@ -175,6 +175,7 @@ void readRGB(RGBC color)
     }
     else
     {
+      Serial.println("rejected");
       transmitCAN(messageRejected);
     }
 

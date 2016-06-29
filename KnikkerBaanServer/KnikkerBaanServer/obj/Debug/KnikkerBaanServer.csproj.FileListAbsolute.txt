@@ -28,3 +28,9 @@ D:\Development\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanSer
 D:\Development\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
 D:\Development\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
 D:\Development\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll.config
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.dll
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\bin\Debug\KnikkerBaanServer.pdb
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.dll
+C:\Users\User\Documents\GitHub\PTT4\KnikkerBaanServer\KnikkerBaanServer\obj\Debug\KnikkerBaanServer.pdb
